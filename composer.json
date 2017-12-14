@@ -9,7 +9,25 @@
             "homepage": "https://github.com/Idrinth"
         }
     ],
+    "bin": [
+        "check-json.php"
+    ],
     "require": {
+        "php": "^5.3.3 || ^7",
         "geraintluff/jsv4": "^1.0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "codacy/coverage": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "De\\Idrinth\\JsonCheck\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "De\\Idrinth\\JsonCheck\\Test\\": "test"
+        }
     }
 }
