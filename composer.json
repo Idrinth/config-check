@@ -1,5 +1,5 @@
 {
-    "name": "idrinth/entity-generator",
+    "name": "idrinth/json-check",
     "description": "Checks a project recursively for json-files and validates them whenever possible.",
     "homepage": "https://github.com/Idrinth/JsonCheck",
     "license": "MIT",
