@@ -6,6 +6,7 @@ php:
   - '5.6'
   - '7.0'
   - '7.1'
+  - '7.2'
 matrix:
   include:
     - php: "5.3"
@@ -16,7 +17,7 @@ before_script:
   - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then phpenv config-rm xdebug.ini ; fi
   - composer update
 script:
-  - vendor/bin/phpunit --testdox --bootstrap vendor/autoload.php test/
+  - phpunit --testdox --bootstrap vendor/autoload.php test/
 after_success:
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ ; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi

@@ -13,7 +13,9 @@ class ValidationListTest extends TestCase
     public function testAddFile()
     {
         $instance = new ValidationList();
-        $file = $this->getMock('\De\Idrinth\JsonCheck\Data\JsonFileResult', array(), array(''));
+        $file = $this->getMockBuilder('\De\Idrinth\JsonCheck\Data\JsonFileResult')
+            ->setConstructorArgs(array(''))
+            ->getMock();
         $file->expects($this->any())
             ->method("getErrorNum")
             ->willReturn(7);

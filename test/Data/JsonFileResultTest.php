@@ -55,7 +55,7 @@ class JsonFileResultTest extends TestCase
      * @return Message (mocked)
      */
     private function getMockedMessage($return = null) {
-        $message = $this->getMock('\De\Idrinth\JsonCheck\Message');
+        $message = $this->getMockBuilder('\De\Idrinth\JsonCheck\Message')->getMock();
         if($return === null) {
             $message->expects($this->any())
                 ->method("isFailure")
