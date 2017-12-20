@@ -20,15 +20,12 @@ class JsonFileValidatorTest extends FileValidatorTest
      * @return SplFileObject
      */
     private function getValidFileMock($content) {
-        $file = $this->getMockBuilder('SplFileObject')
+        $info = $this->getMockBuilder('SplFileObject')
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
-        $file->expects($this->any())
+        $info->expects($this->any())
             ->method('fread')
             ->willReturn($content);
-        $info = $this->getMockBuilder('SplFileInfo')
-            ->setConstructorArgs(array(__FILE__))
-            ->getMock();
         $info->expects($this->any())
             ->method('isFile')
             ->willReturn(true);
@@ -40,7 +37,7 @@ class JsonFileValidatorTest extends FileValidatorTest
             ->willReturn(true);
         $info->expects($this->any())
             ->method('openFile')
-            ->willReturn($file);
+            ->willReturnSelf();
         return $info;
     }
 
