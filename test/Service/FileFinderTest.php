@@ -1,16 +1,16 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\Test\Service;
+namespace De\Idrinth\ConfigCheck\Test\Service;
 
 use PHPUnit\Framework\TestCase;
 
 class FileFinderTest extends TestCase
 {
     /**
-     * @covers De\Idrinth\JsonCheck\Service\FileFinder::checkDir
-     * @todo   Implement testCheckDir().
+     * @covers De\Idrinth\ConfigCheck\Service\FileFinder::find
+     * @todo   Implement testFind().
      */
-    public function testCheckDir()
+    public function testFind()
     {
         $this->markTestIncomplete(
             'This test has not been implemented yet.'

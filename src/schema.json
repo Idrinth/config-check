@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://raw.githubusercontent.com/Idrinth/config-check/master/src/schema.json",
+    "description": "This is the configuration for the configuration check.",
+    "type": "object",
+    "properties": {
+        "ini": {
+            "$ref": "#ext"
+        },
+        "yaml": {
+            "$ref": "#ext"
+        },
+        "xml": {
+            "$ref": "#ext"
+        },
+        "json": {
+            "$ref": "#ext"
+        },
+        "blacklist": {
+            "$ref": "#blacklist"
+        }
+    },
+    "additionalProperties": false,
+    "definitions": {
+        "blacklist": {
+            "$id": "#blacklist",
+            "type": "array",
+            "description": "files and folders to ignore",
+            "items": {
+                "type": "string",
+                "pattern": "^[^\\\\]+$"
+            }
+        },
+        "ext": {
+            "$id": "#ext",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "validity": {
+                    "type": "boolean",
+                    "description": "should files be checked for basic syntax and parseability"
+                },
+                "mapping": {
+                    "type": "object",
+                    "description": "a filename to schema-source mapping",
+                    "patternProperties": {
+                        "^([^\\/]+)+$": {
+                            "type": "string",
+                            "format": "uri"
+                        }
+                    }
+                },
+                "blacklist": {
+                    "$ref": "#blacklist"
+                }
+            },
+            "required": ["validity"]
+        }
+    }
+}

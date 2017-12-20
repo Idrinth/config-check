@@ -1,8 +1,8 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\Test\Message;
+namespace De\Idrinth\ConfigCheck\Test\Message;
 
-use De\Idrinth\JsonCheck\Message\AbstractMessage;
+use De\Idrinth\ConfigCheck\Message\AbstractMessage;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMessageTest extends TestCase

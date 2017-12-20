@@ -1,6 +1,6 @@
 {
-    "name": "idrinth/json-check",
-    "description": "Checks a project recursively for json-files and validates them whenever possible.",
+    "name": "idrinth/config-check",
+    "description": "Checks a project recursively for ini, xml, json or yaml-files and validates them whenever possible.",
     "homepage": "https://github.com/Idrinth/JsonCheck",
     "license": "MIT",
     "authors": [
@@ -10,11 +10,10 @@
         }
     ],
     "bin": [
-        "check-json.php"
+        "check-config.php"
     ],
     "require": {
-        "php": "^5.3.3 || ^7",
-        "geraintluff/jsv4": "^1.0.1"
+        "php": "^5.3 || ^7"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
@@ -22,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "De\\Idrinth\\JsonCheck\\": "src"
+            "De\\Idrinth\\ConfigCheck\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "De\\Idrinth\\JsonCheck\\Test\\": "test"
+            "De\\Idrinth\\ConfigCheck\\Test\\": "test"
         }
     }
 }

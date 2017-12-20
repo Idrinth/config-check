@@ -1,7 +1,7 @@
 <?php
-namespace De\Idrinth\JsonCheck\Message;
+namespace De\Idrinth\ConfigCheck\Message;
 
-use De\Idrinth\JsonCheck\Message;
+use De\Idrinth\ConfigCheck\Message;
 
 abstract class AbstractMessage implements Message
 {

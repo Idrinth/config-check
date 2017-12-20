@@ -1,5 +1,5 @@
 <?php
-namespace De\Idrinth\JsonCheck\Message;
+namespace De\Idrinth\ConfigCheck\Message;
 
 class ErrorMessage extends AbstractMessage
 {

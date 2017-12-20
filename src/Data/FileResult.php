@@ -1,9 +1,9 @@
 <?php
-namespace De\Idrinth\JsonCheck\Data;
+namespace De\Idrinth\ConfigCheck\Data;
 
-use De\Idrinth\JsonCheck\Message;
+use De\Idrinth\ConfigCheck\Message;
 
-class JsonFileResult
+class FileResult
 {
     /**
      * @var string
@@ -36,6 +36,9 @@ class JsonFileResult
      */
     public function getMessage($verbose = 0)
     {
+        if(count($this->messages) === 0 && $verbose < 1) {
+            return '';
+        }
         $content = "\n$this->path\n";
         foreach($this->messages as $message) {
             $content .= $message->toString($verbose);

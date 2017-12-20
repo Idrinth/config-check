@@ -1,17 +1,17 @@
 <?php
-namespace De\Idrinth\JsonCheck\Data;
+namespace De\Idrinth\ConfigCheck\Data;
 
 class ValidationList
 {
     /**
-     * @var JsonFileResult[]
+     * @var FileResult[]
      */
     private $list = array();
 
     /**
-     * @param JsonFileResult $file
+     * @param FileResult $file
      */
-    public function addFile(JsonFileResult $file) {
+    public function addFile(FileResult $file) {
         $this->list[] = $file;
     }
 

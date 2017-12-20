@@ -1,13 +1,13 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\Test;
+namespace De\Idrinth\ConfigCheck\Test;
 
 use PHPUnit\Framework\TestCase;
 
 class ControllerTest extends TestCase
 {
     /**
-     * @covers De\Idrinth\JsonCheck\Controller::getCode
+     * @covers De\Idrinth\ConfigCheck\Controller::getCode
      * @todo   Implement testGetCode().
      */
     public function testGetCode()
@@ -18,7 +18,7 @@ class ControllerTest extends TestCase
     }
 
     /**
-     * @covers De\Idrinth\JsonCheck\Controller::getText
+     * @covers De\Idrinth\ConfigCheck\Controller::getText
      * @todo   Implement testGetText().
      */
     public function testGetText()

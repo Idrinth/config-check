@@ -1,5 +1,5 @@
 <?php
-namespace De\Idrinth\JsonCheck\Message;
+namespace De\Idrinth\ConfigCheck\Message;
 
 class NoticeMessage extends AbstractMessage
 {
@@ -10,6 +10,6 @@ class NoticeMessage extends AbstractMessage
 
     protected function getSymbol()
     {
-        return "X";
+        return "i";
     }
 }

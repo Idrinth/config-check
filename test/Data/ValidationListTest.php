@@ -1,8 +1,8 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\Test\Data;
+namespace De\Idrinth\ConfigCheck\Test\Data;
 
-use De\Idrinth\JsonCheck\Data\ValidationList;
+use De\Idrinth\ConfigCheck\Data\ValidationList;
 use PHPUnit\Framework\TestCase;
 
 class ValidationListTest extends TestCase
@@ -13,7 +13,7 @@ class ValidationListTest extends TestCase
     public function testAddFile()
     {
         $instance = new ValidationList();
-        $file = $this->getMockBuilder('\De\Idrinth\JsonCheck\Data\JsonFileResult')
+        $file = $this->getMockBuilder('\De\Idrinth\ConfigCheck\Data\FileResult')
             ->setConstructorArgs(array(''))
             ->getMock();
         $file->expects($this->any())

@@ -1,8 +1,8 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\Test\Message;
+namespace De\Idrinth\ConfigCheck\Test\Message;
 
-use De\Idrinth\JsonCheck\Message\NoticeMessage;
+use De\Idrinth\ConfigCheck\Message\NoticeMessage;
 
 class NoticeMessageTest extends AbstractMessageTest
 {

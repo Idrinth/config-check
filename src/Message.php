@@ -1,5 +1,5 @@
 <?php
-namespace De\Idrinth\JsonCheck;
+namespace De\Idrinth\ConfigCheck;
 
 interface Message
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace De\Idrinth\JsonCheck\TestData;
+namespace De\Idrinth\ConfigCheck\TestData;
 
-use De\Idrinth\JsonCheck\Data\JsonFileResult;
+use De\Idrinth\ConfigCheck\Data\FileResult;
 use PHPUnit\Framework\TestCase;
 
-class JsonFileResultTest extends TestCase
+class FileResultTest extends TestCase
 {
     /**
      * @return void
      */
     public function testAddGetMessage()
     {
-        $instance = new JsonFileResult(__DIR__);
+        $instance = new FileResult(__DIR__);
         $title = "\n".__DIR__."\n";
-        $this->assertEquals($title, $instance."", "__toString of empty list failed");
-        $this->assertEquals($title, $instance->getMessage(), "getMessage() of empty list failed");
-        $this->assertEquals($title, $instance->getMessage(0), "getMessage(0) of empty list failed");
+        $this->assertEquals("", $instance."", "__toString of empty list failed");
+        $this->assertEquals("", $instance->getMessage(), "getMessage() of empty list failed");
+        $this->assertEquals("", $instance->getMessage(0), "getMessage(0) of empty list failed");
         $this->assertEquals($title, $instance->getMessage(1), "getMessage(1) of empty list failed");
         $this->assertEquals($title, $instance->getMessage(2), "getMessage(2) of empty list failed");
         $instance->addMessage($this->getMockedMessage(false));
@@ -32,7 +32,7 @@ class JsonFileResultTest extends TestCase
      */
     public function testGetErrorNum()
     {
-        $instance = new JsonFileResult(__DIR__);
+        $instance = new FileResult(__DIR__);
         $this->assertEquals(0, $instance->getErrorNum(), "empty list is not considered empty with default");
         $this->assertEquals(0, $instance->getErrorNum(false), "empty list is not considered empty with false");
         $this->assertEquals(0, $instance->getErrorNum(true), "empty list is not considered empty with true");
@@ -55,7 +55,7 @@ class JsonFileResultTest extends TestCase
      * @return Message (mocked)
      */
     private function getMockedMessage($return = null) {
-        $message = $this->getMockBuilder('\De\Idrinth\JsonCheck\Message')->getMock();
+        $message = $this->getMockBuilder('\De\Idrinth\ConfigCheck\Message')->getMock();
         if($return === null) {
             $message->expects($this->any())
                 ->method("isFailure")
