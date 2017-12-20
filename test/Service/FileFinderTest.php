@@ -2,18 +2,17 @@
 
 namespace De\Idrinth\ConfigCheck\Test\Service;
 
+use De\Idrinth\ConfigCheck\Service\FileFinder;
 use PHPUnit\Framework\TestCase;
 
 class FileFinderTest extends TestCase
 {
     /**
-     * @covers De\Idrinth\ConfigCheck\Service\FileFinder::find
-     * @todo   Implement testFind().
      */
     public function testFind()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = new FileFinder();
+        $this->assertCount(6, $instance->find(__DIR__, 'php'));
+        $this->assertCount(1, $instance->find(__DIR__, 'php', array('Validator')));
     }
 }

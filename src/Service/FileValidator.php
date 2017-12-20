@@ -2,7 +2,6 @@
 namespace De\Idrinth\ConfigCheck\Service;
 
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
-use De\Idrinth\ConfigCheck\Message\NoticeMessage;
 use De\Idrinth\ConfigCheck\Message\WarningMessage;
 use SplFileInfo;
 

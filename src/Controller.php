@@ -41,7 +41,7 @@ class Controller
                 $validator->process($type, $data, $config->getBlacklist($type));
             }
         }
-        list($this->code, $this->text) = $data->finish($verbose);
+        list($this->code, $this->text) = $data->finish($verbose, array_key_exists('w', $params));
     }
 
     /**

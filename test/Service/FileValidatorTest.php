@@ -21,7 +21,7 @@ abstract class FileValidatorTest extends TestCase
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
-             ->method('isFile')
+            ->method('isFile')
             ->willReturn(false);
         $instance = $this->getInstance();
         $return = $instance->check($file);
@@ -38,10 +38,10 @@ abstract class FileValidatorTest extends TestCase
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
-             ->method('isFile')
+            ->method('isFile')
             ->willReturn(true);
         $file->expects($this->any())
-             ->method('getSize')
+            ->method('getSize')
             ->willReturn(0);
         $instance = $this->getInstance();
         $return = $instance->check($file);
@@ -58,13 +58,13 @@ abstract class FileValidatorTest extends TestCase
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
-             ->method('isFile')
+            ->method('isFile')
             ->willReturn(true);
         $file->expects($this->any())
-             ->method('getSize')
+            ->method('getSize')
             ->willReturn(1);
         $file->expects($this->any())
-             ->method('isReadable')
+            ->method('isReadable')
             ->willReturn(false);
         $instance = $this->getInstance();
         $return = $instance->check($file);

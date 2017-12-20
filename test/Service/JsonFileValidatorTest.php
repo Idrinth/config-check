@@ -24,19 +24,19 @@ class JsonFileValidatorTest extends FileValidatorTest
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
-             ->method('isFile')
+            ->method('isFile')
             ->willReturn(true);
         $file->expects($this->any())
-             ->method('getSize')
+            ->method('getSize')
             ->willReturn(1);
         $file->expects($this->any())
-             ->method('isReadable')
+            ->method('isReadable')
             ->willReturn(true);
         $file->expects($this->any())
-             ->method('openFile')
-            ->willReturnSelf();
+            ->method('openFile')
+            ->willReturn($file);
         $file->expects($this->any())
-             ->method('fread')
+            ->method('fread')
             ->willReturn($content);
         return $file;
     }
