@@ -8,31 +8,55 @@ use PHPUnit\Framework\TestCase;
 class ValidateFileListTest extends TestCase
 {
     /**
+     * @return FileValidator
      */
-    public function testProcess()
-    {
+    private function getValidatorMock() {
+        $validator = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileValidator')
+            ->getMock();
+        $validator->expects($this->any())
+            ->method('check')
+            ->willReturn(array($this->getMessage()));
+        return $validator;
+    }
+
+    /**
+     * @return Message
+     */
+    private function getMessage() {
+        return $this->getMockBuilder('De\Idrinth\ConfigCheck\Message')
+            ->getMock();
+    }
+
+    /**
+     * @return FileFinder
+     */
+    private function getFinderMock() {
         $finder = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileFinder')
             ->getMock();
         $finder->expects($this->any())
             ->method('find')
-            ->willReturn(array('b.j'));
-        $validator = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileValidator')
-            ->getMockForAbstractClass();
-        $validator->expects($this->any())
-            ->method('check')
-            ->willReturn(array());
-        $instance = new ValidateFileList($finder, __DIR__, array('j' => $validator));
-        $list1 = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\ValidationList')
+            ->willReturn(array(__FILE__));
+        return $finder;
+    }
+    /**
+     * @param boolean $isCalled
+     * @return ValidationList
+     */
+    private function getListMock($isCalled) {
+        $list = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\ValidationList')
             ->getMock();
-        $list1->expects($this->never())
+        $list->expects($isCalled ? $this->once() : $this->never())
             ->method('addFile')
             ->willReturn(null);
-        $instance->process('qq', $list1);
-        $list2 = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\ValidationList')
-            ->getMock();
-        $list2->expects($this->once())
-            ->method('addFile')
-            ->willReturn(null);
-        $instance->process('j', $list2);
+        return $list;
+    }
+
+    /**
+     */
+    public function testProcess()
+    {
+        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock()));
+        $instance->process('qq', $this->getListMock(false));
+        $instance->process('php', $this->getListMock(true));
     }
 }

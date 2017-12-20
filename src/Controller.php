@@ -27,7 +27,6 @@ class Controller
      */
     public function __construct($dir, $params, Config $config)
     {
-        $verbose = !isset($params['v']) ? 0 : is_array($params['v']) ? count($params['v']) : 1;
         $validators = array(
             'yml' => new YamlFileValidator(),
             'ini' => new IniFileValidator(),
@@ -41,20 +40,38 @@ class Controller
                 $validator->process($type, $data, $config->getBlacklist($type));
             }
         }
-        list($this->code, $this->text) = $data->finish($verbose, array_key_exists('w', $params));
+        list($this->code, $this->text) = $data->finish(
+            $this->getParamCount($params, 'v'),
+            $this->getParamCount($params, 'w') > 0
+        );
+    }
+
+    /**
+     * @param array $params
+     * @param string $key
+     * @return int
+     */
+    private function getParamCount(array $params, $key)
+    {
+        if(!array_key_exists($key, $params)) {
+            return 0;
+        }
+        return is_array($params[$key]) ? count($params[$key]) : 1;
     }
 
     /**
      * @return int
      */
-    public function getCode() {
+    public function getCode()
+    {
         return (int) $this->code;
     }
 
     /**
      * @return string
      */
-    public function getText() {
+    public function getText()
+    {
         return $this->text;
     }
 }
