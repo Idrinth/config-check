@@ -23,6 +23,6 @@ script:
 # unit tests
   - phpunit --testdox --bootstrap vendor/autoload.php test/
 # check standards
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src tests check-config.php ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src test check-config.php ; fi
 after_success:
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ && then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
