@@ -15,7 +15,7 @@ class JsonFileValidator extends FileValidator
      */
     private function isContentSchemaJson(array &$results, $json = null) {
         if($json === null) {
-            $results[] = new ErrorMessage("File is not parseable: ".json_last_error_msg());
+            $results[] = new ErrorMessage("File is not parseable: ".JsonError::getLastError());
             return false;
         }
         if(!is_object($json) || !property_exists($json, '$schema')) {
