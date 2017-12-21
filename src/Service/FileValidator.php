@@ -1,17 +1,17 @@
 <?php
 namespace De\Idrinth\ConfigCheck\Service;
 
+use De\Idrinth\ConfigCheck\Data\File;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Message\WarningMessage;
-use SplFileInfo;
 
 abstract class FileValidator
 {
     /**
-     * @param SplFileInfo $file
+     * @param File $file
      * @return Message[]
      */
-    public function check(SplFileInfo $file)
+    public function check(File $file)
     {
         $results = array();
         if(!$this->isFileUseable($results, $file)) {
@@ -19,7 +19,7 @@ abstract class FileValidator
         }
         return $this->validateContent(
             $results,
-            $file->openFile()->fread($file->getSize())
+            $file->getContent()
         );
     }
 
@@ -32,10 +32,10 @@ abstract class FileValidator
 
     /**
      * @param Message[] $results Reference!
-     * @param SplFileInfo $file
+     * @param File $file
      * @return boolean
      */
-    private function isFileUseable(array &$results, SplFileInfo $file) {
+    private function isFileUseable(array &$results, File $file) {
         if(!$file->isFile() || $file->getSize() === 0) {
             $results[] = new WarningMessage("File is empty");
             return false;

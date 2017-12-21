@@ -17,7 +17,7 @@ abstract class FileValidatorTest extends TestCase
      */
     public function testCheckNotFile()
     {
-        $file = $this->getMockBuilder('SplFileObject')
+        $file = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
@@ -34,7 +34,7 @@ abstract class FileValidatorTest extends TestCase
      */
     public function testCheckEmptyFile()
     {
-        $file = $this->getMockBuilder('SplFileObject')
+        $file = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
@@ -54,7 +54,7 @@ abstract class FileValidatorTest extends TestCase
      */
     public function testCheckUnreadableFile()
     {
-        $file = $this->getMockBuilder('SplFileObject')
+        $file = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
             ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $file->expects($this->any())
