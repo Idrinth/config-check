@@ -11,7 +11,8 @@ class ValidateFileListTest extends TestCase
      * @param boolean $isCalled
      * @return FileValidator
      */
-    private function getValidatorMock($isCalled) {
+    private function getValidatorMock($isCalled)
+    {
         $validator = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileValidator')
             ->getMock();
         $validator->expects($isCalled ? $this->once() : $this->never())
@@ -23,7 +24,8 @@ class ValidateFileListTest extends TestCase
     /**
      * @return FileFinder
      */
-    private function getFinderMock() {
+    private function getFinderMock()
+    {
         $finder = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileFinder')
             ->getMock();
         $finder->expects($this->any())
@@ -31,16 +33,17 @@ class ValidateFileListTest extends TestCase
             ->willReturn(array(__FILE__));
         return $finder;
     }
+
     /**
      * @param boolean $isCalled
      * @return ValidationList
      */
-    private function getListMock($isCalled) {
+    private function getListMock($isCalled)
+    {
         $list = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\ValidationList')
             ->getMock();
         $list->expects($isCalled ? $this->once() : $this->never())
-            ->method('addFile')
-            ->willReturn(null);
+            ->method('addFile');
         return $list;
     }
 
@@ -48,15 +51,28 @@ class ValidateFileListTest extends TestCase
      */
     public function testProcessSuccess()
     {
-        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock(true)));
-        $instance->process('php', $this->getListMock(true));
+        $this->runProcess('php');
     }
 
     /**
      */
     public function testProcessFailure()
     {
-        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock(false)));
-        $instance->process('qq', $this->getListMock(false));
+        $this->runProcess('qq');
+    }
+
+    /**
+     * @param string $ext
+     */
+    private function runProcess($ext)
+    {
+        $exists = $ext==='php';
+        $instance = new ValidateFileList(
+            $this->getFinderMock(),
+            __DIR__,
+            array('php' => $this->getValidatorMock($exists))
+        );
+        $list = $this->getListMock($exists);
+        $instance->process($ext, $list);
     }
 }
