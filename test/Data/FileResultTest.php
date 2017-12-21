@@ -55,16 +55,24 @@ class FileResultTest extends TestCase
      * @return Message (mocked)
      */
     private function getMockedMessage($return = null) {
-        $message = $this->getMockBuilder('\De\Idrinth\ConfigCheck\Message')->getMock();
+        $message = $this->getMockedBaseMessage();
         if($return === null) {
             $message->expects($this->any())
                 ->method("isFailure")
                 ->willReturnArgument(0);
-        } else {
-            $message->expects($this->any())
-                ->method("isFailure")
-                ->willReturn($return);
+            return $message;
         }
+        $message->expects($this->any())
+            ->method("isFailure")
+            ->willReturn($return);
+        return $message;
+    }
+
+    /**
+     * @return Message (mocked)
+     */
+    private function getMockedBaseMessage() {
+        $message = $this->getMockBuilder('\De\Idrinth\ConfigCheck\Message')->getMock();
         $message->expects($this->any())
             ->method("__toString")
             ->willReturn("_");

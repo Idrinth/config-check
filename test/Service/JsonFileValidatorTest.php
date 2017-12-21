@@ -73,4 +73,15 @@ class JsonFileValidatorTest extends FileValidatorTest
         $this->assertCount(1, $return, "there were less messages returned than expected");
         $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\NoticeMessage', $return[0], "Lack of schema is not a notice");
     }
+
+    /**
+     * @return void
+     */
+    public function testCheckSchemaJson()
+    {
+        $file = $this->getValidFileMock("{\"\$schema\":\"#id\"}");
+        $instance = $this->getInstance();
+        $return = $instance->check($file);
+        $this->assertCount(0, $return, "there were more messages returned than expected");
+    }
 }

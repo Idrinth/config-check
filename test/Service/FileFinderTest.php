@@ -12,7 +12,7 @@ class FileFinderTest extends TestCase
     public function testFind()
     {
         $instance = new FileFinder();
-        $this->assertCount(7, $instance->find(__DIR__, 'php'));
-        $this->assertCount(2, $instance->find(__DIR__, 'php', array('Validator')));
+        $this->assertCount(6, $instance->find(__DIR__, 'php'));
+        $this->assertCount(1, $instance->find(__DIR__, 'php', array('Validator')));
     }
 }
