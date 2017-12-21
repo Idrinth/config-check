@@ -71,4 +71,27 @@ abstract class FileValidatorTest extends TestCase
         $this->assertCount(1, $return, "there were less messages returned than expected");
         $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\ErrorMessage', $return[0], "unreadable files are not errors");
     }
+
+    /**
+     * @param string $content
+     * @return File
+     */
+    protected function getValidFileMock($content) {
+        $info = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
+            ->setConstructorArgs(array(__FILE__))
+            ->getMock();
+        $info->expects($this->any())
+            ->method('getContent')
+            ->willReturn($content);
+        $info->expects($this->any())
+            ->method('isFile')
+            ->willReturn(true);
+        $info->expects($this->any())
+            ->method('getSize')
+            ->willReturn(1);
+        $info->expects($this->any())
+            ->method('isReadable')
+            ->willReturn(true);
+        return $info;
+    }
 }

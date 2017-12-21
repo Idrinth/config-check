@@ -2,7 +2,6 @@
 
 namespace De\Idrinth\ConfigCheck\Test\Service;
 
-use De\Idrinth\ConfigCheck\Data\File;
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 
 class JsonFileValidatorTest extends FileValidatorTest
@@ -13,29 +12,6 @@ class JsonFileValidatorTest extends FileValidatorTest
     protected function getInstance()
     {
         return new JsonFileValidator();
-    }
-
-    /**
-     * @param string $content
-     * @return File
-     */
-    private function getValidFileMock($content) {
-        $info = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
-            ->setConstructorArgs(array(__FILE__))
-            ->getMock();
-        $info->expects($this->any())
-            ->method('getContent')
-            ->willReturn($content);
-        $info->expects($this->any())
-            ->method('isFile')
-            ->willReturn(true);
-        $info->expects($this->any())
-            ->method('getSize')
-            ->willReturn(1);
-        $info->expects($this->any())
-            ->method('isReadable')
-            ->willReturn(true);
-        return $info;
     }
 
     /**

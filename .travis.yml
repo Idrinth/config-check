@@ -14,10 +14,15 @@ matrix:
 git:
   depth: 3
 before_script:
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then phpenv config-rm xdebug.ini ; fi
+# no need to provide coverage more than once and no need for the speedbump otherwise
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then phpenv config-rm xdebug.ini || true ; fi
+# no need to test formatting more than once and php_codesniffer does not work with older php
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.2" ]]; then composer remove --dev squizlabs/php_codesniffer ; fi
   - composer update
 script:
+# unit tests
   - phpunit --testdox --bootstrap vendor/autoload.php test/
+# check standards
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src tests || true ; fi
 after_success:
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ ; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ && then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
