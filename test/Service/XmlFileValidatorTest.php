@@ -6,6 +6,7 @@ use De\Idrinth\ConfigCheck\Service\XmlFileValidator;
 
 class XmlFileValidatorTest extends FileValidatorTest
 {
+
     /**
      * @return XmlFileValidator
      */

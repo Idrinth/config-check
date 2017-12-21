@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Data;
 
 class ValidationList
@@ -11,7 +12,8 @@ class ValidationList
     /**
      * @param FileResult $file
      */
-    public function addFile(FileResult $file) {
+    public function addFile(FileResult $file)
+    {
         $this->list[] = $file;
     }
 
@@ -20,7 +22,7 @@ class ValidationList
      * @param boolean $warningAsError
      * @return [int,string]
      */
-    public function finish($verbose=0, $warningAsError=false)
+    public function finish($verbose = 0, $warningAsError = false)
     {
         $code = 0;
         $message = '';

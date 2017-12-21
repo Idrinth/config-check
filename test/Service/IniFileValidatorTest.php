@@ -6,6 +6,7 @@ use De\Idrinth\ConfigCheck\Service\IniFileValidator;
 
 class IniFileValidatorTest extends FileValidatorTest
 {
+
     /**
      * @return IniFileValidator
      */

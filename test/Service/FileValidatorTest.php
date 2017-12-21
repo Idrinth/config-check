@@ -7,10 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 abstract class FileValidatorTest extends TestCase
 {
+
     /**
      * @return FileValidator
      */
-    protected abstract function getInstance();
+    abstract protected function getInstance();
 
     /**
      * @return void
@@ -25,8 +26,16 @@ abstract class FileValidatorTest extends TestCase
             ->willReturn(false);
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\WarningMessage', $return[0], "empty files are not warnings");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\WarningMessage',
+            $return[0],
+            "empty files are not warnings"
+        );
     }
 
     /**
@@ -45,8 +54,16 @@ abstract class FileValidatorTest extends TestCase
             ->willReturn(0);
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\WarningMessage', $return[0], "empty files are not warnings");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\WarningMessage',
+            $return[0],
+            "empty files are not warnings"
+        );
     }
 
     /**
@@ -68,15 +85,24 @@ abstract class FileValidatorTest extends TestCase
             ->willReturn(false);
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\ErrorMessage', $return[0], "unreadable files are not errors");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
+            $return[0],
+            "unreadable files are not errors"
+        );
     }
 
     /**
      * @param string $content
      * @return File
      */
-    protected function getValidFileMock($content) {
+    protected function getValidFileMock($content)
+    {
         $info = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\File')
             ->setConstructorArgs(array(__FILE__))
             ->getMock();

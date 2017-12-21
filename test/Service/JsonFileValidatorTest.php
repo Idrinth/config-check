@@ -6,6 +6,7 @@ use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 
 class JsonFileValidatorTest extends FileValidatorTest
 {
+
     /**
      * @return JsonFileValidator
      */
@@ -22,8 +23,16 @@ class JsonFileValidatorTest extends FileValidatorTest
         $file = $this->getValidFileMock("broken");
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\ErrorMessage', $return[0], "broken files are not considered errors");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
+            $return[0],
+            "broken files are not considered errors"
+        );
     }
 
     /**
@@ -34,8 +43,16 @@ class JsonFileValidatorTest extends FileValidatorTest
         $file = $this->getValidFileMock("[\"\"]");
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\NoticeMessage', $return[0], "Json not being an object is not a notice");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\NoticeMessage',
+            $return[0],
+            "Json not being an object is not a notice"
+        );
     }
 
     /**
@@ -46,8 +63,16 @@ class JsonFileValidatorTest extends FileValidatorTest
         $file = $this->getValidFileMock("{\"\":\"\"}");
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\NoticeMessage', $return[0], "Lack of schema is not a notice");
+        $this->assertCount(
+            1,
+            $return,
+            "there were less messages returned than expected"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\NoticeMessage',
+            $return[0],
+            "Lack of schema is not a notice"
+        );
     }
 
     /**
@@ -58,6 +83,10 @@ class JsonFileValidatorTest extends FileValidatorTest
         $file = $this->getValidFileMock("{\"\$schema\":\"#id\"}");
         $instance = $this->getInstance();
         $return = $instance->check($file);
-        $this->assertCount(0, $return, "there were more messages returned than expected");
+        $this->assertCount(
+            0,
+            $return,
+            "there were more messages returned than expected"
+        );
     }
 }

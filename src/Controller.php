@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck;
 
 use De\Idrinth\ConfigCheck\Data\Config;
@@ -35,8 +36,8 @@ class Controller
         );
         $validator = new ValidateFileList(new FileFinder(), $dir, $validators);
         $data = new ValidationList();
-        foreach(array_keys($validators) as $type) {
-            if($config->isEnabled($type)) {
+        foreach (array_keys($validators) as $type) {
+            if ($config->isEnabled($type)) {
                 $validator->process($type, $data, $config->getBlacklist($type));
             }
         }
@@ -53,7 +54,7 @@ class Controller
      */
     private function getParamCount(array $params, $key)
     {
-        if(!array_key_exists($key, $params)) {
+        if (!array_key_exists($key, $params)) {
             return 0;
         }
         return is_array($params[$key]) ? count($params[$key]) : 1;

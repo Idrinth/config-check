@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ValidationListTest extends TestCase
 {
+
     /**
      * @return void
      */
@@ -24,9 +25,17 @@ class ValidationListTest extends TestCase
             ->willReturn("7 Errors");
         $instance->addFile($file);
         $result = $instance->finish();
-        $this->assertCount(2, $result, "output does not provide expected element count");
+        $this->assertCount(
+            2,
+            $result,
+            "output does not provide expected element count"
+        );
         $this->assertEquals(7, $result[0], "a list with 7 errors had none");
-        $this->assertEquals("7 Errors", $result[1], "the list did not provide the predefined text");
+        $this->assertEquals(
+            "7 Errors",
+            $result[1],
+            "the list did not provide the predefined text"
+        );
     }
 
     /**
@@ -36,7 +45,11 @@ class ValidationListTest extends TestCase
     {
         $instance = new ValidationList();
         $result = $instance->finish();
-        $this->assertCount(2, $result, "output does not provide expected element count");
+        $this->assertCount(
+            2,
+            $result,
+            "output does not provide expected element count"
+        );
         $this->assertEquals(0, $result[0], "an empty list had errors");
         $this->assertEquals("", $result[1], "an empty list had text");
     }

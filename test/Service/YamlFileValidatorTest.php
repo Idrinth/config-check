@@ -6,6 +6,7 @@ use De\Idrinth\ConfigCheck\Service\YamlFileValidator;
 
 class YamlFileValidatorTest extends FileValidatorTest
 {
+
     /**
      * @return YamlFileValidator
      */
