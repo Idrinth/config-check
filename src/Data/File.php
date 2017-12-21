@@ -46,12 +46,12 @@ class File
     }
 
     /**
-     * Prevents exceptions that are not useful here
+     * Prevents exceptions that are not useful here and returns the complete avaible content
      * @return string
      */
     public function getContent() {
         try {
-            return $this->file->openFile()->fread($this->file->getSize()) ?: '';
+            return file_get_contents($this->file->getPathname()) ?: '';
         } catch(RuntimeException $exception) {
             return '';
         }
