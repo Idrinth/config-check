@@ -8,23 +8,16 @@ use PHPUnit\Framework\TestCase;
 class ValidateFileListTest extends TestCase
 {
     /**
+     * @param boolean $isCalled
      * @return FileValidator
      */
-    private function getValidatorMock() {
+    private function getValidatorMock($isCalled) {
         $validator = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileValidator')
             ->getMock();
-        $validator->expects($this->any())
+        $validator->expects($isCalled ? $this->once() : $this->never())
             ->method('check')
-            ->willReturn(array($this->getMessage()));
+            ->willReturn(array());
         return $validator;
-    }
-
-    /**
-     * @return Message
-     */
-    private function getMessage() {
-        return $this->getMockBuilder('De\Idrinth\ConfigCheck\Message')
-            ->getMock();
     }
 
     /**
@@ -53,10 +46,17 @@ class ValidateFileListTest extends TestCase
 
     /**
      */
-    public function testProcess()
+    public function testProcessSuccess()
     {
-        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock()));
-        $instance->process('qq', $this->getListMock(false));
+        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock(true)));
         $instance->process('php', $this->getListMock(true));
+    }
+
+    /**
+     */
+    public function testProcessFailure()
+    {
+        $instance = new ValidateFileList($this->getFinderMock(), __DIR__, array('php' => $this->getValidatorMock(false)));
+        $instance->process('qq', $this->getListMock(false));
     }
 }
