@@ -4,9 +4,11 @@
 
 This project is checking any project's config files for correctness, including schema validation once implemented.
 
-## Supported Formats
+## Supported Formats and checks
 
-- JSON(valid file, parseable)
-- YAML(valid file, parseable)
-- INI(valid file, parseable)
-- XML(valid file, parseable)
+| Format | File | Parseable | Schema/XSL |
+| ------------- | ------------- | ------------- | ------------- |
+| JSON | X | X | -(XSD planned) |
+| YAML | X | X | -(JSON Schema planned) |
+| INI | X | X | -(JSON Schema planned) |
+| XML | X | X | -(JSON Schema planned) |
