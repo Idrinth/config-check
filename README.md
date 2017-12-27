@@ -7,6 +7,6 @@ This project is checking any project's config files for correctness, including s
 ## Supported Formats
 
 - JSON(valid file, parseable)
-- YAML(valid file)
+- YAML(valid file, parseable)
 - INI(valid file, parseable)
 - XML(valid file, parseable)
