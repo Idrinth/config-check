@@ -6,7 +6,7 @@ This project is checking any project's config files for correctness, including s
 
 ## Supported Formats and checks
 
-| Format | File | Parseable | Schema/XSL |
+| Format | File | Parseable | Schema |
 | ------------- | ------------- | ------------- | ------------- |
 | JSON | X | X | -(XSD planned) |
 | YAML | X | X | -(JSON Schema planned) |
