@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Service;
 
 use RecursiveDirectoryIterator;
@@ -8,13 +9,14 @@ use RegexIterator;
 
 class FileFinder
 {
+
     /**
      * @param string $root
      * @param string $extension
      * @param string[] $blacklist
      * @return string[]
      */
-    public function find($root, $extension, $blacklist=array())
+    public function find($root, $extension, $blacklist = array())
     {
         $result = array();
         $files = new RegexIterator(
@@ -24,9 +26,9 @@ class FileFinder
             '/^.+\.'.$extension.'$/i',
             RecursiveRegexIterator::GET_MATCH
         );
-        foreach($files as $path) {
+        foreach ($files as $path) {
             $path = $path[0];
-            if(!$this->isBlacklisted($path, $root, $blacklist)) {
+            if (!$this->isBlacklisted($path, $root, $blacklist)) {
                 $result[] = $path;
             }
         }
@@ -41,10 +43,14 @@ class FileFinder
      */
     private function isBlacklisted($path, $root, $blacklist)
     {
-        foreach($blacklist as $forbidden) {
-            if(
-                ($forbidden{0}==='/' && preg_match('/^'.preg_quote($root.$forbidden).'/i', $path))
-                || ($forbidden{0}!=='/' && preg_match('/'.preg_quote($forbidden).'/i', $path))
+        foreach ($blacklist as $forbidden) {
+            if (($forbidden{0} === '/' && preg_match(
+                '/^'.preg_quote($root.$forbidden).'/i',
+                $path
+            )) || ($forbidden{0} !== '/' && preg_match(
+                '/'.preg_quote($forbidden).'/i',
+                $path
+            ))
             ) {
                 return true;
             }

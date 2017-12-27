@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Data;
 
 use RuntimeException;
@@ -22,14 +23,16 @@ class File
     /**
      * @return boolean
      */
-    public function isFile() {
+    public function isFile()
+    {
         return $this->file->isFile();
     }
 
     /**
      * @return boolean
      */
-    public function isReadable() {
+    public function isReadable()
+    {
         return $this->file->isReadable();
     }
 
@@ -37,10 +40,11 @@ class File
      * Prevents exceptions that are not useful here
      * @return int
      */
-    public function getSize() {
+    public function getSize()
+    {
         try {
             return $this->file->getSize();
-        } catch(RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             return 0;
         }
     }
@@ -49,10 +53,11 @@ class File
      * Prevents exceptions that are not useful here and returns the complete avaible content
      * @return string
      */
-    public function getContent() {
+    public function getContent()
+    {
         try {
             return file_get_contents($this->file->getPathname()) ?: '';
-        } catch(RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             return '';
         }
     }

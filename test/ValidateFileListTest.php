@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ValidateFileListTest extends TestCase
 {
+
     /**
      * @param boolean $isCalled
      * @return FileValidator
@@ -66,7 +67,7 @@ class ValidateFileListTest extends TestCase
      */
     private function runProcess($ext)
     {
-        $exists = $ext==='php';
+        $exists = $ext === 'php';
         $instance = new ValidateFileList(
             $this->getFinderMock(),
             __DIR__,

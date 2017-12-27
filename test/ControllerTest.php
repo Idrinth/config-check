@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ControllerTest extends TestCase
 {
+
     /**
      */
     public function testGetCode()
@@ -42,7 +43,8 @@ class ControllerTest extends TestCase
      * @param Config $configMock
      * @return Controller
      */
-    private function getInstance($configMock) {
+    private function getInstance($configMock)
+    {
         return new Controller(
             __DIR__,
             $configMock->isEnabled('json') ? array('w' => true) : array(),
@@ -53,21 +55,24 @@ class ControllerTest extends TestCase
     /**
      * @return Config
      */
-    private function getNothingAllowedConfig() {
+    private function getNothingAllowedConfig()
+    {
         return $this->getConfig(false);
     }
 
     /**
      * @return Config
      */
-    private function getAllAllowedConfig() {
+    private function getAllAllowedConfig()
+    {
         return $this->getConfig(true);
     }
 
     /**
      * @return Config
      */
-    private function getConfig($enabled) {
+    private function getConfig($enabled)
+    {
         $noneAllowed = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\Config')
             ->getMock();
         $noneAllowed->expects($this->any())

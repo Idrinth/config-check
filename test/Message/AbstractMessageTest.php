@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMessageTest extends TestCase
 {
+
     /**
      * @return AbstractMessage
      */

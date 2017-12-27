@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Data;
 
 use De\Idrinth\ConfigCheck\Message;
@@ -26,7 +27,8 @@ class FileResult
     /**
      * @param Message $message
      */
-    public function addMessage(Message $message) {
+    public function addMessage(Message $message)
+    {
         $this->messages[] = $message;
     }
 
@@ -36,11 +38,11 @@ class FileResult
      */
     public function getMessage($verbose = 0)
     {
-        if(count($this->messages) === 0 && $verbose < 1) {
+        if (count($this->messages) === 0 && $verbose < 1) {
             return '';
         }
         $content = "\n$this->path\n";
-        foreach($this->messages as $message) {
+        foreach ($this->messages as $message) {
             $content .= $message->toString($verbose);
         }
         return $content;
@@ -61,8 +63,8 @@ class FileResult
     public function getErrorNum($warningsAsErrors = false)
     {
         $amount = 0;
-        foreach($this->messages as $message) {
-            if($message->isFailure($warningsAsErrors)) {
+        foreach ($this->messages as $message) {
+            if ($message->isFailure($warningsAsErrors)) {
                 $amount++;
             }
         }

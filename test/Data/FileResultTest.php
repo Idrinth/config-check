@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileResultTest extends TestCase
 {
+
     /**
      * @return void
      */
@@ -15,16 +16,52 @@ class FileResultTest extends TestCase
         $instance = new FileResult(__DIR__);
         $title = "\n".__DIR__."\n";
         $this->assertEquals("", $instance."", "__toString of empty list failed");
-        $this->assertEquals("", $instance->getMessage(), "getMessage() of empty list failed");
-        $this->assertEquals("", $instance->getMessage(0), "getMessage(0) of empty list failed");
-        $this->assertEquals($title, $instance->getMessage(1), "getMessage(1) of empty list failed");
-        $this->assertEquals($title, $instance->getMessage(2), "getMessage(2) of empty list failed");
+        $this->assertEquals(
+            "",
+            $instance->getMessage(),
+            "getMessage() of empty list failed"
+        );
+        $this->assertEquals(
+            "",
+            $instance->getMessage(0),
+            "getMessage(0) of empty list failed"
+        );
+        $this->assertEquals(
+            $title,
+            $instance->getMessage(1),
+            "getMessage(1) of empty list failed"
+        );
+        $this->assertEquals(
+            $title,
+            $instance->getMessage(2),
+            "getMessage(2) of empty list failed"
+        );
         $instance->addMessage($this->getMockedMessage(false));
-        $this->assertEquals($title."0", $instance."", "__toString of filled list failed");
-        $this->assertEquals($title."0", $instance->getMessage(), "getMessage() of filled list failed");
-        $this->assertEquals($title."0", $instance->getMessage(0), "getMessage(0) of filled list failed");
-        $this->assertEquals($title."1", $instance->getMessage(1), "getMessage(1) of filled list failed");
-        $this->assertEquals($title."2", $instance->getMessage(2), "getMessage(2) of filled list failed");
+        $this->assertEquals(
+            $title."0",
+            $instance."",
+            "__toString of filled list failed"
+        );
+        $this->assertEquals(
+            $title."0",
+            $instance->getMessage(),
+            "getMessage() of filled list failed"
+        );
+        $this->assertEquals(
+            $title."0",
+            $instance->getMessage(0),
+            "getMessage(0) of filled list failed"
+        );
+        $this->assertEquals(
+            $title."1",
+            $instance->getMessage(1),
+            "getMessage(1) of filled list failed"
+        );
+        $this->assertEquals(
+            $title."2",
+            $instance->getMessage(2),
+            "getMessage(2) of filled list failed"
+        );
     }
 
     /**
@@ -33,30 +70,79 @@ class FileResultTest extends TestCase
     public function testGetErrorNum()
     {
         $instance = new FileResult(__DIR__);
-        $this->assertEquals(0, $instance->getErrorNum(), "empty list is not considered empty with default");
-        $this->assertEquals(0, $instance->getErrorNum(false), "empty list is not considered empty with false");
-        $this->assertEquals(0, $instance->getErrorNum(true), "empty list is not considered empty with true");
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(),
+            "empty list is not considered empty with default"
+        );
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(false),
+            "empty list is not considered empty with false"
+        );
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(true),
+            "empty list is not considered empty with true"
+        );
         $instance->addMessage($this->getMockedMessage(false));
-        $this->assertEquals(0, $instance->getErrorNum(), "one notice list is not considered empty with default");
-        $this->assertEquals(0, $instance->getErrorNum(false), "one notice list is not considered empty with false");
-        $this->assertEquals(0, $instance->getErrorNum(true), "one notice list is not considered empty with true");
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(),
+            "one notice list is not considered empty with default"
+        );
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(false),
+            "one notice list is not considered empty with false"
+        );
+        $this->assertEquals(
+            0,
+            $instance->getErrorNum(true),
+            "one notice list is not considered empty with true"
+        );
         $instance->addMessage($this->getMockedMessage(true));
-        $this->assertEquals(1, $instance->getErrorNum(), "notice and error list does not have expected size of 1 with default");
-        $this->assertEquals(1, $instance->getErrorNum(false), "notice and error list does not have expected size of 1 with false");
-        $this->assertEquals(1, $instance->getErrorNum(true), "notice and error list does not have expected size of 1 with true");
+        $this->assertEquals(
+            1,
+            $instance->getErrorNum(),
+            "notice and error list does not have expected size of 1 with default"
+        );
+        $this->assertEquals(
+            1,
+            $instance->getErrorNum(false),
+            "notice and error list does not have expected size of 1 with false"
+        );
+        $this->assertEquals(
+            1,
+            $instance->getErrorNum(true),
+            "notice and error list does not have expected size of 1 with true"
+        );
         $instance->addMessage($this->getMockedMessage());
-        $this->assertEquals(1, $instance->getErrorNum(), "notice, warning and error list does not have expected size of 1 with default");
-        $this->assertEquals(1, $instance->getErrorNum(false), "notice, warning and error list does not have expected size of 1 with false");
-        $this->assertEquals(2, $instance->getErrorNum(true), "notice, warning and error list does not have expected size of 2 with true");
+        $this->assertEquals(
+            1,
+            $instance->getErrorNum(),
+            "notice, warning and error list does not have expected size of 1 with default"
+        );
+        $this->assertEquals(
+            1,
+            $instance->getErrorNum(false),
+            "notice, warning and error list does not have expected size of 1 with false"
+        );
+        $this->assertEquals(
+            2,
+            $instance->getErrorNum(true),
+            "notice, warning and error list does not have expected size of 2 with true"
+        );
     }
 
     /**
      * @param null|boolean $return
      * @return Message (mocked)
      */
-    private function getMockedMessage($return = null) {
+    private function getMockedMessage($return = null)
+    {
         $message = $this->getMockedBaseMessage();
-        if($return === null) {
+        if ($return === null) {
             $message->expects($this->any())
                 ->method("isFailure")
                 ->willReturnArgument(0);
@@ -71,7 +157,8 @@ class FileResultTest extends TestCase
     /**
      * @return Message (mocked)
      */
-    private function getMockedBaseMessage() {
+    private function getMockedBaseMessage()
+    {
         $message = $this->getMockBuilder('\De\Idrinth\ConfigCheck\Message')->getMock();
         $message->expects($this->any())
             ->method("__toString")

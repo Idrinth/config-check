@@ -7,13 +7,17 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase
 {
+
     /**
      */
     public function testIsEnabled()
     {
         $config = new Config();
-        foreach(array('yml','xml','ini','json') as $extension) {
-            $this->assertTrue($config->isEnabled($extension), "$extension is not enabled by default.");
+        foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
+            $this->assertTrue(
+                $config->isEnabled($extension),
+                "$extension is not enabled by default."
+            );
         }
     }
 
@@ -22,10 +26,18 @@ class ConfigTest extends TestCase
     public function testGetBlacklist()
     {
         $config = new Config();
-        foreach(array('yml','xml','ini','json') as $extension) {
+        foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
             $results = $config->getBlacklist($extension);
-            $this->assertCount(1, $results, "$extension has an unexpected default ignore list.");
-            $this->assertEquals("vendor", $results[0], "$extension does not ignore vendor as expected.");
+            $this->assertCount(
+                1,
+                $results,
+                "$extension has an unexpected default ignore list."
+            );
+            $this->assertEquals(
+                "vendor",
+                $results[0],
+                "$extension does not ignore vendor as expected."
+            );
         }
     }
 }

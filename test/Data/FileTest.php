@@ -7,12 +7,16 @@ use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase
 {
+
     /**
      */
     public function testIsFile()
     {
         $instance = new File(__FILE__);
-        $this->assertTrue($instance->isFile(), "the file running is not considered a file.");
+        $this->assertTrue(
+            $instance->isFile(),
+            "the file running is not considered a file."
+        );
         $instance2 = new File(__FILE__.'.oo');
         $this->assertFalse($instance2->isFile(), "a missing file is a file.");
     }
@@ -22,9 +26,15 @@ class FileTest extends TestCase
     public function testIsReadable()
     {
         $instance = new File(__FILE__);
-        $this->assertTrue($instance->isReadable(), "the file running is not considered readable.");
+        $this->assertTrue(
+            $instance->isReadable(),
+            "the file running is not considered readable."
+        );
         $instance2 = new File(__FILE__.'.oo');
-        $this->assertFalse($instance2->isReadable(), "a missing file is readable.");
+        $this->assertFalse(
+            $instance2->isReadable(),
+            "a missing file is readable."
+        );
     }
 
     /**
@@ -32,9 +42,17 @@ class FileTest extends TestCase
     public function testGetSize()
     {
         $instance = new File(__FILE__);
-        $this->assertGreaterThan(0, $instance->getSize(), "the file running is considered empty.");
+        $this->assertGreaterThan(
+            0,
+            $instance->getSize(),
+            "the file running is considered empty."
+        );
         $instance2 = new File(__FILE__.'.oo');
-        $this->assertEquals(0, $instance2->getSize(), "a missing file has a size above zero.");
+        $this->assertEquals(
+            0,
+            $instance2->getSize(),
+            "a missing file has a size above zero."
+        );
     }
 
     /**
@@ -42,8 +60,14 @@ class FileTest extends TestCase
     public function testGetContent()
     {
         $instance = new File(__FILE__);
-        $this->assertNotEmpty($instance->getContent(), "the file running is considered empty.");
+        $this->assertNotEmpty(
+            $instance->getContent(),
+            "the file running is considered empty."
+        );
         $instance2 = new File(__FILE__.'.oo');
-        $this->assertEmpty($instance2->getContent(), "a missing file has content.");
+        $this->assertEmpty(
+            $instance2->getContent(),
+            "a missing file has content."
+        );
     }
 }
