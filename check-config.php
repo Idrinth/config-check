@@ -5,6 +5,6 @@ use De\Idrinth\ConfigCheck\Data\Config;
 
 require_once 'vendor/autoload.php';
 
-$controller = new Controller(getcwd(), getopt('v'), new Config());
+$controller = new Controller(new Config(getcwd(), getopt('vw')));
 echo $controller->getText();
 die($controller->getCode());

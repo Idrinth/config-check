@@ -12,7 +12,7 @@ class ConfigTest extends TestCase
      */
     public function testIsEnabled()
     {
-        $config = new Config();
+        $config = new Config(__DIR__, array());
         foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
             $this->assertTrue(
                 $config->isEnabled($extension),
@@ -25,7 +25,7 @@ class ConfigTest extends TestCase
      */
     public function testGetBlacklist()
     {
-        $config = new Config();
+        $config = new Config(__DIR__, array());
         foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
             $results = $config->getBlacklist($extension);
             $this->assertCount(
@@ -34,7 +34,7 @@ class ConfigTest extends TestCase
                 "$extension has an unexpected default ignore list."
             );
             $this->assertEquals(
-                "vendor",
+                "/vendor",
                 $results[0],
                 "$extension does not ignore vendor as expected."
             );

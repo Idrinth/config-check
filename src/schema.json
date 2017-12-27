@@ -18,6 +18,16 @@
         },
         "blacklist": {
             "$ref": "#blacklist"
+        },
+        "verbositiy": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3,
+            "description": "A value from 0-3 that defines how much information is printed out."
+        },
+        "warningAsError": {
+            "type": "boolean",
+            "description": "Consider all warnings to be errors."
         }
     },
     "additionalProperties": false,

@@ -45,11 +45,7 @@ class ControllerTest extends TestCase
      */
     private function getInstance($configMock)
     {
-        return new Controller(
-            __DIR__,
-            $configMock->isEnabled('json') ? array('w' => true) : array(),
-            $configMock
-        );
+        return new Controller($configMock);
     }
 
     /**
@@ -74,15 +70,17 @@ class ControllerTest extends TestCase
     private function getConfig($enabled)
     {
         $noneAllowed = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\Config')
+            ->setConstructorArgs(array(__DIR__, $enabled ? array('w' => true) : array()))
             ->getMock();
         $noneAllowed->expects($this->any())
             ->method('isEnabled')
-            ->withAnyParameters()
             ->willReturn($enabled);
         $noneAllowed->expects($this->any())
             ->method('getBlacklist')
-            ->withAnyParameters()
             ->willReturn(array());
+        $noneAllowed->expects($this->any())
+            ->method('getRootDir')
+            ->willReturn(__DIR__);
         return $noneAllowed;
     }
 }

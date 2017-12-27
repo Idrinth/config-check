@@ -1,0 +1,10 @@
+{
+    "verbositiy": 3,
+    "blacklist": ["/vendor", "/test"],
+    "json": {
+        "validity": true,
+        "mapping": {
+            ".idrinth-cc.json": "src/schema.json"
+        }
+    }
+}

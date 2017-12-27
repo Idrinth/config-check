@@ -23,10 +23,9 @@ class Controller
     private $text;
 
     /**
-     * @param string $dir
-     * @param array $params
+     * @param Config $config
      */
-    public function __construct($dir, $params, Config $config)
+    public function __construct(Config $config)
     {
         $validators = array(
             'yml' => new YamlFileValidator(),
@@ -34,7 +33,7 @@ class Controller
             'xml' => new XmlFileValidator(),
             'json' => new JsonFileValidator(),
         );
-        $validator = new ValidateFileList(new FileFinder(), $dir, $validators);
+        $validator = new ValidateFileList(new FileFinder(), $config->getRootDir(), $validators);
         $data = new ValidationList();
         foreach (array_keys($validators) as $type) {
             if ($config->isEnabled($type)) {
@@ -42,22 +41,9 @@ class Controller
             }
         }
         list($this->code, $this->text) = $data->finish(
-            $this->getParamCount($params, 'v'),
-            $this->getParamCount($params, 'w') > 0
+            $config->getVerbosity(),
+            $config->hasWarningsAsErrors()
         );
-    }
-
-    /**
-     * @param array $params
-     * @param string $key
-     * @return int
-     */
-    private function getParamCount(array $params, $key)
-    {
-        if (!array_key_exists($key, $params)) {
-            return 0;
-        }
-        return is_array($params[$key]) ? count($params[$key]) : 1;
     }
 
     /**

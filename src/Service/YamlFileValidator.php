@@ -18,10 +18,10 @@ class YamlFileValidator extends FileValidator
     protected function validateContent(array &$results, $content)
     {
         try {
-            if(!Yaml::decodeFromString($content)) {
+            if (!Yaml::decodeFromString($content)) {
                 $results[] = new ErrorMessage("Unable to parse the file's content");
             }
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $results[] = new ErrorMessage($ex->getMessage());
         }
         return $results;

@@ -14,6 +14,7 @@ class YamlFileValidatorTest extends FileValidatorTest
     {
         return new YamlFileValidator();
     }
+
     /**
      * @return void
      */
@@ -23,8 +24,13 @@ class YamlFileValidatorTest extends FileValidatorTest
         $instance = $this->getInstance();
         $return = $instance->check($file);
         $this->assertCount(1, $return, "there were less messages returned than expected");
-        $this->assertInstanceOf('De\Idrinth\ConfigCheck\Message\ErrorMessage', $return[0], "broken files are not considered errors");
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
+            $return[0],
+            "broken files are not considered errors"
+        );
     }
+
     /**
      * @return void
      */
