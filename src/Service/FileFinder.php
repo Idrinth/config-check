@@ -45,10 +45,10 @@ class FileFinder
     {
         foreach ($blacklist as $forbidden) {
             if (($forbidden{0} === '/' && preg_match(
-                '/^'.preg_quote($root.$forbidden).'/i',
+                '/^'.preg_quote($root.$forbidden, '/').'/i',
                 $path
             )) || ($forbidden{0} !== '/' && preg_match(
-                '/'.preg_quote($forbidden).'/i',
+                '/'.preg_quote($forbidden, '/').'/i',
                 $path
             ))
             ) {
