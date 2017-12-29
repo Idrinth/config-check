@@ -39,7 +39,8 @@ class FileRetriever
      * @param string $uri
      * @return string
      */
-    private function getCurled($uri) {
+    private function getCurled($uri)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

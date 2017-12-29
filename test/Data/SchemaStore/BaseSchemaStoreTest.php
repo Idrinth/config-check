@@ -11,7 +11,7 @@ abstract class BaseSchemaStoreTest extends TestCase
     /**
      * @return BaseSchemaStore
      */
-    protected abstract function getInstance($data);
+    abstract protected function getInstance($data);
 
     /**
      * @test
