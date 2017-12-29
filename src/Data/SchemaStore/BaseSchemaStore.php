@@ -1,7 +1,8 @@
 <?php
-namespace De\Irinth\ConfigCheck\Data\SchemaStore;
+namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 use De\Idrinth\ConfigCheck\Data\SchemaStore;
+use De\Idrinth\ConfigCheck\Service\FileRetriever;
 
 abstract class BaseSchemaStore implements SchemaStore
 {
@@ -17,11 +18,18 @@ abstract class BaseSchemaStore implements SchemaStore
     private $filemappings;
 
     /**
+     * @var FileRetriever
+     */
+    private $retriever;
+
+    /**
+     * @param FileRetriever $retriever
      * @param string[] $filemappings
      */
-    function __construct($filemappings = array())
+    public function __construct(FileRetriever $retriever, $filemappings = array())
     {
         $this->filemappings = $filemappings;
+        $this->retriever = $retriever;
     }
 
     /**
@@ -38,7 +46,7 @@ abstract class BaseSchemaStore implements SchemaStore
         if ($uri) {
             $this->fill($list, $uri);
         }
-        return $list;
+        return array_values($list);
     }
 
     /**
@@ -50,7 +58,7 @@ abstract class BaseSchemaStore implements SchemaStore
             return;
         }
         if (!isset($this->schemata[$uri])) {
-            $this->schemata[$uri] = $this->prepareSchema(file_get_contents($uri));
+            $this->schemata[$uri] = $this->prepareSchema($this->retriever->get($uri));
         }
         $list[$uri] = $this->schemata[$uri];
     }
