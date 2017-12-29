@@ -46,7 +46,6 @@ class FileRetriever
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
-        var_dump($result);
         curl_close($ch);
         return $result;
     }
