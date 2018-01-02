@@ -119,7 +119,7 @@ class RetrievalFakes
      */
     public static function fileGetContents($file)
     {
-        self::incrementCall(__FUNCTION__, $file);
+        self::incrementCall(__FUNCTION__, realpath($file) ?: $file);
         if (self::$fakeFileGetContents !== null) {
             return self::$fakeFileGetContents;
         }
