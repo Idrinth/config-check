@@ -27,7 +27,7 @@ script:
 # check standards
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src test check-config.php ; fi
 # self-check config
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then check-config.php ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then php check-config.php ; fi
 after_success:
 # upload coverage
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
