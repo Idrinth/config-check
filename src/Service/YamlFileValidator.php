@@ -5,7 +5,7 @@ namespace De\Idrinth\ConfigCheck\Service;
 use De\Idrinth\ConfigCheck\Message;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\Yaml\Yaml;
-use Exception;
+use De\Idrinth\Yaml\YamlException;
 
 class YamlFileValidator extends FileValidator
 {
@@ -18,10 +18,8 @@ class YamlFileValidator extends FileValidator
     protected function validateContent(array &$results, $content)
     {
         try {
-            if (!Yaml::decodeFromString($content)) {
-                $results[] = new ErrorMessage("Unable to parse the file's content");
-            }
-        } catch (Exception $ex) {
+            Yaml::decodeFromString($content);
+        } catch (YamlException $ex) {
             $results[] = new ErrorMessage($ex->getMessage());
         }
         return $results;

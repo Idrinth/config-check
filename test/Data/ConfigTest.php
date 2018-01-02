@@ -70,7 +70,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @return boolean
+     * @test
      */
     public function testHasWarningsAsErrors()
     {
@@ -84,5 +84,30 @@ class ConfigTest extends TestCase
         $this->assertTrue($config4->hasWarningsAsErrors(), "Warnings as Errors was not enabled.");
         $config5 = new Config(__DIR__, array("w" => array(1,2,3)));
         $this->assertTrue($config5->hasWarningsAsErrors(), "Warnings as Errors was not enabled by multiple values.");
+    }
+
+    /**
+     * @test
+     */
+    public function testReadFromFile()
+    {
+        $root = dirname(dirname(__DIR__));
+        $config = new Config($root, array());
+        $config1 = new Config($root, array("v" => array(1, 2,3)));
+        $this->assertFalse($config->hasWarningsAsErrors(), "Warnings as Errors was enabled by default.");
+        $this->assertEquals(2, $config->getVerbosity(), "Verbosity did not match the expected value of 2.");
+        $this->assertEquals(3, $config1->getVerbosity(), "Verbosity did not match the expected value of 3.");
+        $this->assertEquals($root, $config->getRootDir(), "The root dir was not stored as expected.");
+        $this->assertTrue($config->isEnabled("json"), "Json was not enabled.");
+        $this->assertFalse($config->isEnabled("xml"), "Xml was enabled.");
+        $jsonBlackList = $config->getBlacklist("json");
+        $this->assertCount(3, $jsonBlackList, "The json blacklist did not have the expected elements.");
+        $this->assertEquals("/vendor", $jsonBlackList[0], "The local vendor folder was not ignored.");
+        $this->assertEquals("/test", $jsonBlackList[1], "The local test folder was not ignored.");
+        $this->assertEquals("broken.json", $jsonBlackList[2], "Intentionally broken files are not ignored.");
+        $xmlBlackList = $config->getBlacklist("xml");
+        $this->assertCount(2, $xmlBlackList, "The xml blacklist did not have the expected elements.");
+        $this->assertEquals("/vendor", $xmlBlackList[0], "The local vendor folder was not ignored.");
+        $this->assertEquals("/test", $xmlBlackList[1], "The local test folder was not ignored.");
     }
 }

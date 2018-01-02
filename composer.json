@@ -15,7 +15,7 @@
     "require": {
         "php": "^5.3 || ^7",
         "symfony/polyfill-php55": "^1",
-        "idrinth/yaml-facade": "^1"
+        "idrinth/yaml-facade": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",

@@ -44,11 +44,12 @@ class FileFinder
     private function isBlacklisted($path, $root, $blacklist)
     {
         foreach ($blacklist as $forbidden) {
+            $systemAdjustedForbidden = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);
             if (($forbidden{0} === '/' && preg_match(
-                '/^'.preg_quote($root.$forbidden, '/').'/i',
+                '/^'.preg_quote($root.$systemAdjustedForbidden, '/').'/i',
                 $path
             )) || ($forbidden{0} !== '/' && preg_match(
-                '/'.preg_quote($forbidden, '/').'/i',
+                '/'.preg_quote($systemAdjustedForbidden, '/').'/i',
                 $path
             ))
             ) {

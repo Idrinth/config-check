@@ -1,10 +1,17 @@
 {
-    "verbositiy": 3,
+    "verbosity": 2,
     "blacklist": ["/vendor", "/test"],
+    "xml": {
+        "validity": false
+    },
+    "ini": {
+        "validity": false
+    },
     "json": {
         "validity": true,
         "mapping": {
             ".idrinth-cc.json": "src/schema.json"
-        }
+        },
+        "blacklist": ["broken.json"]
     }
 }

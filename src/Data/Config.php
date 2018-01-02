@@ -16,11 +16,9 @@ class Config
     public function __construct($rootDir, $cliOptions)
     {
         $file = $rootDir.DIRECTORY_SEPARATOR.'.idrinth-cc.json';
-        if (is_file($file)) {
-            $this->config = json_decode(file_get_contents($file), true);
-        }
-        $this->config['warningsAsErrors'] = $this->getAdjustedWarningStatus($cliOptions);
-        $this->config['verbosity'] = $this->getAdjustedVerbosity($cliOptions);
+        $this->config = is_file($file) ? json_decode(file_get_contents($file), true) : array();
+        $this->config['warningsAsErrors'] = $this->processWarningStatus($cliOptions);
+        $this->config['verbosity'] = $this->processVerbosity($cliOptions);
         $this->config['root'] = $rootDir;
     }
 
@@ -28,7 +26,7 @@ class Config
      * @param array $cliOptions
      * @return boolean
      */
-    private function getAdjustedWarningStatus($cliOptions)
+    private function processWarningStatus($cliOptions)
     {
         if (array_key_exists('w', $cliOptions)) {
             return true;
@@ -40,12 +38,12 @@ class Config
      * @param array $cliOptions
      * @return int
      */
-    private function getAdjustedVerbosity($cliOptions)
+    private function processVerbosity($cliOptions)
     {
-        if (array_key_exists('v', $cliOptions)) {
-            return (int) $this->getParamCount($cliOptions, 'v');
-        }
-        return isset($this->config['verbosity']) ? (int) $this->config['verbosity'] : 0;
+        return max(array(
+            isset($this->config['verbosity']) ? (int) $this->config['verbosity'] : 0,
+            $this->getParamCount($cliOptions, 'v')
+        ));
     }
 
     /**
@@ -87,7 +85,7 @@ class Config
         }
         switch (count($sources)) {
             case 2:
-                return array_merge($sources[0], $sources[0]);
+                return array_merge($sources[0], $sources[1]);
             case 1:
                 return $sources[0];
             case 0:

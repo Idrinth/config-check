@@ -19,7 +19,7 @@
         "blacklist": {
             "$ref": "#blacklist"
         },
-        "verbositiy": {
+        "verbosity": {
             "type": "integer",
             "minimum": 0,
             "maximum": 3,
