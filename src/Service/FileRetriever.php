@@ -23,6 +23,7 @@ class FileRetriever
     public function get($uri)
     {
         if (!preg_match('/^.+?:\\/\\//', $uri)) {
+            $uri = str_replace('/', DIRECTORY_SEPARATOR, $uri);
             return file_get_contents(
                 is_file($uri) ?
                 $uri :
