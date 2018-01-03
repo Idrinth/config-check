@@ -22,7 +22,10 @@ class IniFileValidator extends FileValidator
         foreach (array(true, false) as $sections) {
             foreach ($scanners as $scanner) {
                 if (!@parse_ini_string($content, $sections, $scanner)) {
-                    $results[] = new ErrorMessage("Can't parse with settings: Scanner $scanner Sections $sections: ".json_encode(error_get_last()));
+                    $results[] = new ErrorMessage(
+                        "Can't parse with settings: Scanner $scanner Sections $sections: "
+                        . json_encode(error_get_last())
+                    );
                 }
             }
         }

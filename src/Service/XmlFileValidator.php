@@ -21,7 +21,7 @@ class XmlFileValidator extends FileValidator
     {
         if (!@simplexml_load_string($content)) {
             $results[] = new ErrorMessage("XML not parseable");
-            foreach(libxml_get_errors() as $error) {
+            foreach (libxml_get_errors() as $error) {
                 $results[] = new ErrorMessage($error->message);
             }
         }
