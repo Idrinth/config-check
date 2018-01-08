@@ -16,9 +16,9 @@ git:
 before_script:
 # no need to provide coverage more than once and no need for the speedbump otherwise
   - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then phpenv config-rm xdebug.ini || true ; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then composer remove --dev codacy/coverage --no-update ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require codacy/coverage:^3.1 --no-update ; fi
 # no need to test formatting more than once and php_codesniffer does not work with older php
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.2" ]]; then composer remove --dev squizlabs/php_codesniffer --no-update ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then composer require squizlabs/php_codesniffer:dev-master --no-update ; fi
 # actually installing
   - composer update
 script:
