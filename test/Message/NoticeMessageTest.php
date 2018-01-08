@@ -24,4 +24,12 @@ class NoticeMessageTest extends AbstractMessageTest
     {
         return new NoticeMessage("Example");
     }
+
+    /**
+     * @return int
+     */
+    protected function getMinVerbosity()
+    {
+        return 3;
+    }
 }

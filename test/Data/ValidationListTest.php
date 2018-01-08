@@ -32,7 +32,7 @@ class ValidationListTest extends TestCase
         );
         $this->assertEquals(7, $result[0], "a list with 7 errors had none");
         $this->assertEquals(
-            "7 Errors",
+            "\nConfig Check: Failed\n0/1 OK\n\n7 Errors\n",
             $result[1],
             "the list did not provide the predefined text"
         );
@@ -51,6 +51,10 @@ class ValidationListTest extends TestCase
             "output does not provide expected element count"
         );
         $this->assertEquals(0, $result[0], "an empty list had errors");
-        $this->assertEquals("", $result[1], "an empty list had text");
+        $this->assertEquals(
+            "\nConfig Check: OK\n0/0 OK\n\n\n",
+            $result[1],
+            "an empty list had a different than expected text text"
+        );
     }
 }

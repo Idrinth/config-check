@@ -12,11 +12,18 @@ abstract class AbstractMessage implements Message
     private $message;
 
     /**
-     * @param string $message
+     * @var int
      */
-    public function __construct($message)
+    private $minVerbosity;
+
+    /**
+     * @param string $message
+     * @param int $minVerbosity
+     */
+    public function __construct($message, $minVerbosity)
     {
-        $this->message = $message;
+        $this->message = trim($message, "\n ");
+        $this->minVerbosity = $minVerbosity;
     }
 
     /**
@@ -24,7 +31,7 @@ abstract class AbstractMessage implements Message
      */
     public function __toString()
     {
-        return $this->toString();
+        return $this->toString(1);
     }
 
     /**
@@ -33,13 +40,13 @@ abstract class AbstractMessage implements Message
      */
     public function toString($verbose = 0)
     {
-        if ($verbose === 0) {
+        if ($verbose < $this->minVerbosity) {
             return "";
         }
-        if ($verbose === 1) {
+        if ($verbose === $this->minVerbosity) {
             return $this->getSymbol();
         }
-        return "[{$this->getSymbol()}] $this->message\n";
+        return "  [{$this->getSymbol()}] $this->message\n";
     }
 
     /**

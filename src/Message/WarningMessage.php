@@ -4,6 +4,13 @@ namespace De\Idrinth\ConfigCheck\Message;
 
 class WarningMessage extends AbstractMessage
 {
+    /**
+     * @param string $message
+     */
+    public function __construct($message)
+    {
+        parent::__construct($message, 2);
+    }
 
     /**
      * @param boolean $warningAsError

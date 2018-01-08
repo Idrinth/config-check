@@ -24,4 +24,12 @@ class WarningMessageTest extends AbstractMessageTest
     {
         return new WarningMessage("Example");
     }
+
+    /**
+     * @return int
+     */
+    protected function getMinVerbosity()
+    {
+        return 2;
+    }
 }
