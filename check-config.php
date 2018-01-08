@@ -4,7 +4,8 @@
 use De\Idrinth\ConfigCheck\Controller;
 use De\Idrinth\ConfigCheck\Data\Config;
 
-require_once is_file('vendor/autoload.php') ? 'vendor/autoload.php' : dirname(dirname(__DIR__)).'autoload.php';
+$vendor = str_replace('/', DIRECTORY_SEPARATOR, '/vendor/autoload.php');
+require_once is_file(__DIR__.$vendor) ? __DIR__.$vendor : dirname(dirname(__DIR__)).$vendor;
 
 $controller = new Controller(new Config(getcwd(), getopt('vw')));
 echo $controller->getText();
