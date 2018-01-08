@@ -9,63 +9,130 @@ class FileResultTest extends TestCase
 {
 
     /**
-     * @return void
+     * @test
      */
-    public function testAddGetMessage()
+    public function testAddGetMessageError()
     {
-        $instance = new FileResult(__DIR__);
-        $title = "\n".__DIR__."\n";
-        $this->assertEquals("", $instance."", "__toString of empty list failed");
-        $this->assertEquals(
-            "",
-            $instance->getMessage(),
-            "getMessage() of empty list failed"
-        );
-        $this->assertEquals(
-            "",
-            $instance->getMessage(0),
-            "getMessage(0) of empty list failed"
-        );
-        $this->assertEquals(
-            $title,
-            $instance->getMessage(1),
-            "getMessage(1) of empty list failed"
-        );
-        $this->assertEquals(
-            $title,
-            $instance->getMessage(2),
-            "getMessage(2) of empty list failed"
-        );
-        $instance->addMessage($this->getMockedMessage(false));
-        $this->assertEquals(
-            $title."0",
-            $instance."",
-            "__toString of filled list failed"
-        );
-        $this->assertEquals(
-            $title."0",
-            $instance->getMessage(),
-            "getMessage() of filled list failed"
-        );
-        $this->assertEquals(
-            $title."0",
-            $instance->getMessage(0),
-            "getMessage(0) of filled list failed"
-        );
-        $this->assertEquals(
-            $title."1",
-            $instance->getMessage(1),
-            "getMessage(1) of filled list failed"
-        );
-        $this->assertEquals(
-            $title."2",
-            $instance->getMessage(2),
-            "getMessage(2) of filled list failed"
+        $this->internalGetMessage(
+            array(
+                array('', ''),//verbosity 0
+                array("\n[F] ".__DIR__."\n1", "\n[F] ".__DIR__."\n1"),//verbosity 1
+                array("\n[F] ".__DIR__."\n2", "\n[F] ".__DIR__."\n2"),//verbosity 2
+                array("\n[F] ".__DIR__."\n3", "\n[F] ".__DIR__."\n3"),//verbosity 3
+            ),
+            $this->getMockedMessage(true)
         );
     }
 
     /**
-     * @creturn null
+     * @test
+     */
+    public function testAddGetMessageWarning()
+    {
+        $this->internalGetMessage(
+            array(
+                array('', ''),//verbosity 0
+                array('', "\n[F] ".__DIR__."\n1"),//verbosity 1
+                array('', "\n[F] ".__DIR__."\n2"),//verbosity 2
+                array("\n[X] ".__DIR__."\n3", "\n[F] ".__DIR__."\n3"),//verbosity 3
+            ),
+            $this->getMockedMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testAddGetMessageNotice()
+    {
+        $this->internalGetMessage(
+            array(
+                array('', ''),//verbosity 0
+                array('', ""),//verbosity 1
+                array('', ""),//verbosity 2
+                array("\n[X] ".__DIR__."\n3", "\n[X] ".__DIR__."\n3"),//verbosity 3
+            ),
+            $this->getMockedMessage(false)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testAddGetMessageEmpty()
+    {
+        $this->internalGetMessage(array(
+            array('', ''),//verbosity 0
+            array('', ''),//verbosity 1
+            array('', ''),//verbosity 2
+            array("\n[X] ".__DIR__."\n", "\n[X] ".__DIR__."\n")//verbosity 3
+        ));
+    }
+
+    /**
+     * @param array $asserts the expected results
+     * @param Message|Null $message
+     */
+    private function internalGetMessage($asserts = array(), $message = null)
+    {
+        $instance = new FileResult(__DIR__);
+        if ($message) {
+            $instance->addMessage($message);
+        }
+        $this->assertEquals(
+            $asserts[1][0],
+            $instance."",
+            "__toString failed"
+        );
+        $this->assertEquals(
+            $asserts[0][0],
+            $instance->getMessage(),
+            "getMessage() failed"
+        );
+        $this->assertEquals(
+            $asserts[0][0],
+            $instance->getMessage(0),
+            "getMessage(0) failed"
+        );
+        $this->assertEquals(
+            $asserts[0][1],
+            $instance->getMessage(0, true),
+            "getMessage(0, true) failed"
+        );
+        $this->assertEquals(
+            $asserts[1][0],
+            $instance->getMessage(1),
+            "getMessage(1) failed"
+        );
+        $this->assertEquals(
+            $asserts[1][1],
+            $instance->getMessage(1, true),
+            "getMessage(1, true) failed"
+        );
+        $this->assertEquals(
+            $asserts[2][0],
+            $instance->getMessage(2),
+            "getMessage(2) failed"
+        );
+        $this->assertEquals(
+            $asserts[2][1],
+            $instance->getMessage(2, true),
+            "getMessage(2, true) failed"
+        );
+        $this->assertEquals(
+            $asserts[3][0],
+            $instance->getMessage(3),
+            "getMessage(3) failed"
+        );
+        $this->assertEquals(
+            $asserts[3][1],
+            $instance->getMessage(3, true),
+            "getMessage(3, true) failed"
+        );
+    }
+
+    /**
+     * @test
      */
     public function testGetErrorNum()
     {

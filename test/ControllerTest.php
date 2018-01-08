@@ -29,7 +29,8 @@ class ControllerTest extends TestCase
      */
     public function testGetText()
     {
-        $this->assertEmpty(
+        $this->assertEquals(
+            "\nConfig Check: OK\n0/0 OK\n\n\n",
             $this->getInstance($this->getNothingAllowedConfig())->getText(),
             "There are error-texts without having checked..."
         );

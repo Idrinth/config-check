@@ -14,13 +14,37 @@ abstract class AbstractMessageTest extends TestCase
     abstract protected function getInstance();
 
     /**
+     * @return int
+     */
+    abstract protected function getMinVerbosity();
+
+    /**
      * @return void
      */
     public function testToString()
     {
-        $this->assertEquals("", $this->getInstance()->toString());
-        $this->assertEquals("", $this->getInstance()->__toString());
-        $this->assertEquals(1, strlen($this->getInstance()->toString(1)));
-        $this->assertEquals(12, strlen($this->getInstance()->toString(2)));
+        $this->assertEquals(
+            $this->getInstance()->toString(0),
+            $this->getInstance()->toString(),
+            "verbosity does not default to 0"
+        );
+        $this->assertEquals(
+            $this->getInstance()->toString(1),
+            $this->getInstance()->__toString(),
+            "__toString does not use verbosity 1 by default"
+        );
+        for ($verbosity = 0; $verbosity < 4; $verbosity++) {
+            $expectedLength = 0;
+            if ($verbosity === $this->getMinVerbosity()) {
+                $expectedLength = 1;
+            } elseif ($verbosity > $this->getMinVerbosity()) {
+                $expectedLength = 14;
+            }
+            $this->assertEquals(
+                $expectedLength,
+                strlen($this->getInstance()->toString($verbosity)),
+                "At verbosity $verbosity the string was not $expectedLength characters long."
+            );
+        }
     }
 }

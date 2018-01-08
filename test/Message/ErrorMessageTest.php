@@ -24,4 +24,12 @@ class ErrorMessageTest extends AbstractMessageTest
     {
         return new ErrorMessage("Example");
     }
+
+    /**
+     * @return int
+     */
+    protected function getMinVerbosity()
+    {
+        return 1;
+    }
 }

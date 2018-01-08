@@ -24,25 +24,21 @@ class XmlFileValidatorTest extends FileValidatorTest
         $instance = $this->getInstance();
         $return = $instance->check($file);
         $this->assertCount(
-            3,
+            6,
             $return,
-            "there were less messages returned than expected"
+            "there weren't 6 messages returned as expected"
         );
-        $this->assertInstanceOf(
-            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
-            $return[0],
-            "broken files are not considered errors(1)"
-        );
-        $this->assertInstanceOf(
-            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
-            $return[1],
-            "broken files are not considered errors(2)"
-        );
-        $this->assertInstanceOf(
-            'De\Idrinth\ConfigCheck\Message\ErrorMessage',
-            $return[2],
-            "broken files are not considered errors(3)"
-        );
+        $warnings = 0;
+        $errors = 0;
+        foreach ($return as $ret) {
+            if ($ret instanceof \De\Idrinth\ConfigCheck\Message\ErrorMessage) {
+                $errors++;
+            } elseif ($ret instanceof \De\Idrinth\ConfigCheck\Message\WarningMessage) {
+                $warnings++;
+            }
+        }
+        $this->assertEquals(2, $warnings, "There were $warnings instead of 2 Warnings returned.");
+        $this->assertEquals(4, $errors, "There were $errors instead of 4 Errors returned.");
     }
 
     /**

@@ -26,10 +26,18 @@ class ValidationList
     {
         $code = 0;
         $message = '';
+        $valid = $total = count($this->list);
         foreach ($this->list as $file) {
-            $code += $file->getErrorNum($warningAsError);
-            $message .= $file->getMessage($verbose);
+            $errors = $file->getErrorNum($warningAsError);
+            if ($errors > 0) {
+                $valid--;
+            }
+            $code += $errors;
+            $message .= $file->getMessage($verbose, $warningAsError);
         }
-        return array($code, $message);
+        return array(
+            $code,
+            "\nConfig Check: ".($valid==$total?"OK":"Failed")."\n$valid/$total OK\n\n$message\n"
+        );
     }
 }

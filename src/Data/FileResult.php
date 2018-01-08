@@ -34,14 +34,22 @@ class FileResult
 
     /**
      * @param int $verbose
+     * @param boolean $warningsAsErrors
      * @return string
      */
-    public function getMessage($verbose = 0)
+    public function getMessage($verbose = 0, $warningsAsErrors = false)
     {
-        if (count($this->messages) === 0 && $verbose < 1) {
+        if ($verbose < 1) {
             return '';
         }
-        $content = "\n$this->path\n";
+        if (count($this->messages) === 0 && $verbose < 2) {
+            return '';
+        }
+        $errors = $this->getErrorNum($warningsAsErrors);
+        if ($errors === 0 && $verbose < 3) {
+            return '';
+        }
+        $content = "\n[".($errors>0?'F':'X')."] $this->path\n";
         foreach ($this->messages as $message) {
             $content .= $message->toString($verbose);
         }
@@ -53,7 +61,7 @@ class FileResult
      */
     public function __toString()
     {
-        return $this->getMessage();
+        return $this->getMessage(1);
     }
 
     /**
