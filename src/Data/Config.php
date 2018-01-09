@@ -117,4 +117,14 @@ class Config
     {
         return $this->config['warningsAsErrors'];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getMapping($type)
+    {
+        return isset($this->config[$type]) && isset($this->config[$type]['mapping']) ? 
+            $this->config[$type]['mapping'] :
+            array();
+    }
 }

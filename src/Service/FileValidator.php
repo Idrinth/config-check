@@ -3,11 +3,25 @@
 namespace De\Idrinth\ConfigCheck\Service;
 
 use De\Idrinth\ConfigCheck\Data\File;
+use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Message\WarningMessage;
 
 abstract class FileValidator
 {
+
+    /**
+     * @var SchemaStore 
+     */
+    protected $schemaStore;
+
+    /**
+     * @param SchemaStore $schemaStore
+     */
+    public function __construct(SchemaStore $schemaStore)
+    {
+        $this->schemaStore = $schemaStore;
+    }
 
     /**
      * @param File $file
@@ -19,7 +33,11 @@ abstract class FileValidator
         if (!$this->isFileUseable($results, $file)) {
             return $results;
         }
-        return $this->validateContent(
+        if (!$this->validateContent($results, $file->getContent())) {
+            return $results;
+        }
+        return $this->validateSchema(
+            $file->getName(),
             $results,
             $file->getContent()
         );
@@ -28,9 +46,16 @@ abstract class FileValidator
     /**
      * @param Message[] $results
      * @param string $content
-     * @return Message[]
+     * @return boolean
      */
     abstract protected function validateContent(array &$results, $content);
+
+    /**
+     * @param Message[] $results
+     * @param string $content
+     * @return Message[]
+     */
+    abstract protected function validateSchema($filename, array &$results, $content);
 
     /**
      * @param Message[] $results Reference!

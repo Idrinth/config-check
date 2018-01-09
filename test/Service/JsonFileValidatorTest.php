@@ -12,7 +12,7 @@ class JsonFileValidatorTest extends FileValidatorTest
      */
     protected function getInstance()
     {
-        return new JsonFileValidator();
+        return new JsonFileValidator($this->getSchemaStoreMock());
     }
 
     /**

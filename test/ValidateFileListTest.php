@@ -9,12 +9,28 @@ class ValidateFileListTest extends TestCase
 {
 
     /**
+     * @param array $return
+     * @return SchemaStore
+     */
+    private function getSchemaStoreMock()
+    {
+        $store = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\SchemaStore')
+            ->setConstructorArgs(array(__FILE__))
+            ->getMock();
+        $store->expects($this->any())
+            ->method('get')
+            ->willReturn(array());
+        return $store;
+    }
+
+    /**
      * @param boolean $isCalled
      * @return FileValidator
      */
     private function getValidatorMock($isCalled)
     {
         $validator = $this->getMockBuilder('De\Idrinth\ConfigCheck\Service\FileValidator')
+            ->setConstructorArgs(array($this->getSchemaStoreMock()))
             ->getMock();
         $validator->expects($isCalled ? $this->once() : $this->never())
             ->method('check')

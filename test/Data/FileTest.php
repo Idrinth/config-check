@@ -70,4 +70,22 @@ class FileTest extends TestCase
             "a missing file has content."
         );
     }
+
+    /**
+     */
+    public function testGetName()
+    {
+        $instance = new File(__FILE__);
+        $this->assertEquals(
+            'FileTest.php',
+            $instance->getName(),
+            "the file running is considered empty."
+        );
+        $instance2 = new File(__FILE__.'.oo');
+        $this->assertEquals(
+            'FileTest.php.oo',
+            $instance2->getName(),
+            "a missing file has content."
+        );
+    }
 }

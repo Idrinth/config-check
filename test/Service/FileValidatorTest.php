@@ -2,6 +2,8 @@
 
 namespace De\Idrinth\ConfigCheck\Test\Service;
 
+use De\Idrinth\ConfigCheck\Data\File;
+use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Service\FileValidator;
 use PHPUnit\Framework\TestCase;
 
@@ -119,5 +121,20 @@ abstract class FileValidatorTest extends TestCase
             ->method('isReadable')
             ->willReturn(true);
         return $info;
+    }
+
+    /**
+     * @param array $return
+     * @return SchemaStore
+     */
+    protected function getSchemaStoreMock($return = array())
+    {
+        $store = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\SchemaStore')
+            ->setConstructorArgs(array(__FILE__))
+            ->getMock();
+        $store->expects($this->any())
+            ->method('get')
+            ->willReturn($return);
+        return $store;
     }
 }

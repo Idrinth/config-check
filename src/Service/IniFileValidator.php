@@ -11,10 +11,11 @@ class IniFileValidator extends FileValidator
     /**
      * @param Message[] $results
      * @param string $content
-     * @return Message[]
+     * @return boolean
      */
     protected function validateContent(array &$results, $content)
     {
+        $isValid = true;
         $scanners = array(INI_SCANNER_NORMAL, INI_SCANNER_RAW);
         if (version_compare(PHP_VERSION, '5.6.1', '>=')) {
             $scanners[] = INI_SCANNER_TYPED;//not avaible before
@@ -29,10 +30,11 @@ class IniFileValidator extends FileValidator
                             error_get_last()
                         )
                     );
+                    $isValid = false;
                 }
             }
         }
-        return $results;
+        return $isValid;
     }
 
     /**
@@ -46,5 +48,16 @@ class IniFileValidator extends FileValidator
         $sections = $sections?'yes':'no';
         $scanners = array('Normal','Raw','Typed');
         return "Can't parse with Scanner[{$scanners[$scanner]}] Sections[$sections]: {$error['message']}";
+    }
+
+    /**
+     * @param type $filename
+     * @param Message[] $results
+     * @param string $content
+     * @return Message[]
+     */
+    protected function validateSchema($filename, array &$results, $content)
+    {
+        return $results;
     }
 }

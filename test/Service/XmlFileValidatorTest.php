@@ -12,7 +12,7 @@ class XmlFileValidatorTest extends FileValidatorTest
      */
     protected function getInstance()
     {
-        return new XmlFileValidator();
+        return new XmlFileValidator($this->getSchemaStoreMock());
     }
 
     /**

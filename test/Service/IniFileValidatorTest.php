@@ -12,7 +12,7 @@ class IniFileValidatorTest extends FileValidatorTest
      */
     protected function getInstance()
     {
-        return new IniFileValidator();
+        return new IniFileValidator($this->getSchemaStoreMock());
     }
 
     /**

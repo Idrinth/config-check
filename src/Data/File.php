@@ -61,4 +61,12 @@ class File
             return '';
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->file->getFilename();
+    }
 }

@@ -12,7 +12,7 @@ class YamlFileValidatorTest extends FileValidatorTest
      */
     protected function getInstance()
     {
-        return new YamlFileValidator();
+        return new YamlFileValidator($this->getSchemaStoreMock());
     }
 
     /**
