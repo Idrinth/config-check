@@ -10,7 +10,8 @@
     "json": {
         "validity": true,
         "mapping": {
-            ".idrinth-cc.json": "src/schema.json"
+            ".idrinth-cc.json": "src/schema.json",
+            "composer.json": "https://getcomposer.org/schema.json"
         },
         "blacklist": ["broken.json"]
     }

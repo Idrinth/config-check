@@ -14,7 +14,7 @@ class ConfigTest extends TestCase
     public function testIsEnabled()
     {
         $config = new Config(__DIR__, array());
-        foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
+        foreach (array('yaml', 'xml', 'ini', 'json') as $extension) {
             $this->assertTrue(
                 $config->isEnabled($extension),
                 "$extension is not enabled by default."
@@ -28,7 +28,7 @@ class ConfigTest extends TestCase
     public function testGetBlacklist()
     {
         $config = new Config(__DIR__, array());
-        foreach (array('yml', 'xml', 'ini', 'json') as $extension) {
+        foreach (array('yaml', 'xml', 'ini', 'json') as $extension) {
             $results = $config->getBlacklist($extension);
             $this->assertCount(
                 1,
@@ -89,6 +89,17 @@ class ConfigTest extends TestCase
     /**
      * @test
      */
+    public function testGetMapping()
+    {
+        $config = new Config(__DIR__, array());
+        $this->assertInternalType('array', $config->getMapping('ini'), 'INI-Mapping was not an array');
+        $this->assertCount(0, $config->getMapping('xml'), 'XML-Mapping was filled');
+        $this->assertCount(0, $config->getMapping('json'), 'JSON-Mapping was filled');
+    }
+
+    /**
+     * @test
+     */
     public function testReadFromFile()
     {
         $root = dirname(dirname(__DIR__));
@@ -100,6 +111,9 @@ class ConfigTest extends TestCase
         $this->assertEquals($root, $config->getRootDir(), "The root dir was not stored as expected.");
         $this->assertTrue($config->isEnabled("json"), "Json was not enabled.");
         $this->assertFalse($config->isEnabled("xml"), "Xml was enabled.");
+        $this->assertCount(2, $config->getMapping('json'), 'JSON-Mapping was not filled');
+        $this->assertArrayHasKey('.idrinth-cc.json', $config->getMapping('json'), 'JSON-Mapping was not filled');
+        $this->assertArrayHasKey('composer.json', $config->getMapping('json'), 'JSON-Mapping was not filled');
         $jsonBlackList = $config->getBlacklist("json");
         $this->assertCount(3, $jsonBlackList, "The json blacklist did not have the expected elements.");
         $this->assertEquals("/vendor", $jsonBlackList[0], "The local vendor folder was not ignored.");
