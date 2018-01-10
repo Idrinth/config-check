@@ -1,7 +1,7 @@
 {
     "name": "idrinth/config-check",
     "description": "Checks a project recursively for ini, xml, json or yaml-files and validates them whenever possible.",
-    "homepage": "https://github.com/Idrinth/JsonCheck",
+    "homepage": "https://github.com/Idrinth/config-check",
     "license": "MIT",
     "authors": [
         {
