@@ -30,15 +30,10 @@ class Controller
      */
     public function __construct(Config $config)
     {
-        $validators = array(
-            'yml' => new YamlFileValidator(new Json(new FileRetriever($config->getRootDir()), $config->getMapping('yaml'))),
-            'ini' => new IniFileValidator(new Json(new FileRetriever($config->getRootDir()), $config->getMapping('ini'))),
-            'xml' => new XmlFileValidator(new Xml(new FileRetriever($config->getRootDir()), $config->getMapping('xml'))),
-            'json' => new JsonFileValidator(new Json(new FileRetriever($config->getRootDir()), $config->getMapping('json'))),
-        );
+        $validators = $this->getValidators($config);
         $validator = new ValidateFileList(new FileFinder(), $config->getRootDir(), $validators);
         $data = new ValidationList();
-        foreach (array_keys($validators) as $type) {
+        foreach (array('yaml', 'ini', 'xml', 'json') as $type) {
             if ($config->isEnabled($type)) {
                 $validator->process($type, $data, $config->getBlacklist($type));
             }
@@ -46,6 +41,21 @@ class Controller
         list($this->code, $this->text) = $data->finish(
             $config->getVerbosity(),
             $config->hasWarningsAsErrors()
+        );
+    }
+
+    /**
+     * @param Config $config
+     * @return FileValidator[]
+     */
+    private function getValidators(Config $config)
+    {
+        $fileRetriever = new FileRetriever($config->getRootDir());
+        return array(
+            'yml' => new YamlFileValidator(new Json($fileRetriever, $config->getMapping('yaml'))),
+            'ini' => new IniFileValidator(new Json($fileRetriever, $config->getMapping('ini'))),
+            'xml' => new XmlFileValidator(new Xml($fileRetriever, $config->getMapping('xml'))),
+            'json' => new JsonFileValidator(new Json($fileRetriever, $config->getMapping('json'))),
         );
     }
 

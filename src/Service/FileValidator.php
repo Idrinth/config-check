@@ -11,7 +11,7 @@ abstract class FileValidator
 {
 
     /**
-     * @var SchemaStore 
+     * @var SchemaStore
      */
     protected $schemaStore;
 

@@ -2,6 +2,7 @@
 
 namespace De\Idrinth\ConfigCheck\Test\Service;
 
+use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Service\XmlFileValidator;
 
 class XmlFileValidatorTest extends FileValidatorTest
@@ -28,17 +29,39 @@ class XmlFileValidatorTest extends FileValidatorTest
             $return,
             "there weren't 6 messages returned as expected"
         );
-        $warnings = 0;
         $errors = 0;
         foreach ($return as $ret) {
-            if ($ret instanceof \De\Idrinth\ConfigCheck\Message\ErrorMessage) {
+            if ($ret instanceof ErrorMessage) {
                 $errors++;
-            } elseif ($ret instanceof \De\Idrinth\ConfigCheck\Message\WarningMessage) {
-                $warnings++;
             }
         }
-        $this->assertEquals(2, $warnings, "There were $warnings instead of 2 Warnings returned.");
-        $this->assertEquals(4, $errors, "There were $errors instead of 4 Errors returned.");
+        $this->assertEquals(6, $errors, "There were $errors instead of 6 Errors returned.");
+    }
+
+    /**
+     * @test
+     */
+    public function testCheckBrokenDTDXml()
+    {
+        $file = $this->getValidFileMock(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            . "<!DOCTYPE EXAMPLE [\n<!ELEMENT rotten (#PCDATA)>\n]>\n"
+            . "<root><my /></root>"
+        );
+        $instance = $this->getInstance();
+        $return = $instance->check($file);
+        $this->assertCount(
+            2,
+            $return,
+            "there weren't 2 messages returned as expected"
+        );
+        $errors = 0;
+        foreach ($return as $ret) {
+            if ($ret instanceof ErrorMessage) {
+                $errors++;
+            }
+        }
+        $this->assertEquals(2, $errors, "There were $errors instead of 2 Errors returned.");
     }
 
     /**
@@ -50,9 +73,14 @@ class XmlFileValidatorTest extends FileValidatorTest
         $instance = $this->getInstance();
         $return = $instance->check($file);
         $this->assertCount(
-            0,
+            1,
             $return,
-            "there were more messages returned than expected"
+            "there was an unexpected number of messages returned"
+        );
+        $this->assertInstanceOf(
+            'De\Idrinth\ConfigCheck\Message\NoticeMessage',
+            $return[0],
+            "The message was of an unexpected type: ".get_class($return[0])
         );
     }
 }

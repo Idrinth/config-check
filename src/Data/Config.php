@@ -123,7 +123,7 @@ class Config
      */
     public function getMapping($type)
     {
-        return isset($this->config[$type]) && isset($this->config[$type]['mapping']) ? 
+        return isset($this->config[$type]) && isset($this->config[$type]['mapping']) ?
             $this->config[$type]['mapping'] :
             array();
     }
