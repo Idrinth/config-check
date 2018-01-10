@@ -13,4 +13,4 @@ This project is checking any project's config files for correctness, including s
 | JSON | X | X | (JSON Schema planned) |
 | YAML | X | X | (JSON Schema planned) |
 | INI | X | X | (JSON Schema planned) |
-| XML | X | X | (XSD planned) |
+| XML | X | X | DTD, (XSD planned) |

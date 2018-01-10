@@ -68,9 +68,9 @@ class XmlFileValidator extends FileValidator
     {
         $document = new DOMDocument();
         $document->loadXML($content);
-        if($document->doctype) {
+        if ($document->doctype) {
             libxml_clear_errors();
-            if(!$document->validate()) {
+            if (!$document->validate()) {
                 $results[] = new ErrorMessage("XML doesn't match DTD");
                 foreach (libxml_get_errors() as $error) {
                     $results[] = new ErrorMessage($this->getFromLibXML($error));
