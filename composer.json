@@ -18,7 +18,7 @@
         "idrinth/yaml-facade": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.7|^6.5"
+        "phpunit/phpunit": "^4.8||^5.7||^6.5"
     },
     "suggests-dev": {
         "squizlabs/php_codesniffer": ">=3.1 for checking PSR-2 compliance during developement"
