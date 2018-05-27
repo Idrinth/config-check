@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+use De\Idrinth\ConfigCheck\Controller;
+use De\Idrinth\ConfigCheck\Data\Config;
+
+foreach(array(
+  __DIR__,
+  dirname(__DIR__),
+  dirname(dirname(__DIR__)),
+  dirname(dirname(dirname(__DIR__)))
+) as $folder) {
+    $vendor = str_replace('/', DIRECTORY_SEPARATOR, $folder.'/vendor/autoload.php');
+    if (is_file($vendor)) {
+        require_once($vendor);
+
+        $controller = new Controller(new Config(getcwd(), getopt('vw')));
+        echo $controller->getText();
+        die($controller->getCode());
+    }
+}
+echo "Composer-Autoloader not found";
+die(17);

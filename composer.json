@@ -10,7 +10,7 @@
         }
     ],
     "bin": [
-        "check-config.php"
+        "check-config"
     ],
     "require": {
         "php": "^5.3 || ^7",
