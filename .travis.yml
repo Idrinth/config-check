@@ -26,9 +26,9 @@ script:
   - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then vendor/bin/phpunit --testdox --bootstrap vendor/autoload.php test/ ; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --testdox --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ ; fi
 # check standards
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src test check-config.php ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src test check-config ; fi
 # self-check config
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then php check-config.php ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then php check-config ; fi
 after_success:
 # upload coverage
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
