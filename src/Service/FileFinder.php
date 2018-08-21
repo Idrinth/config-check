@@ -44,18 +44,36 @@ class FileFinder
     private function isBlacklisted($path, $root, $blacklist)
     {
         foreach ($blacklist as $forbidden) {
-            $sysAdjusted = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);
-            if (($forbidden{0} === '/' && preg_match(
-                '/^'.preg_quote($root.$sysAdjusted, '/').'/i',
-                $path
-            )) || ($forbidden{0} !== '/' && preg_match(
-                '/'.preg_quote($sysAdjusted, '/').'/i',
-                $path
-            ))
-            ) {
+            if ($this->matchesPath($forbidden, $root, $path)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @param string $forbidden
+     * @param string $root
+     * @param string $path
+     * @return boolean
+     */
+    private function matchesPath($forbidden, $root, $path)
+    {
+        $sysAdjusted = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);
+        if ($forbidden{0} === '/') {
+            return $this->isMatch($path, $root.$sysAdjusted);
+        }
+        return $this->isMatch($path, $sysAdjusted);
+    }
+
+    /**
+     * @param string $path
+     * @param string $toMath
+     * @return boolean
+     */
+    private function isMatch($path, $toMath)
+    {
+        $match = preg_match('/^'.preg_quote($toMath, '/').'/i', $path);
+        return is_int($match) && $match > 0;
     }
 }

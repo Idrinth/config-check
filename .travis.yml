@@ -178,7 +178,7 @@ jobs:
       before_install:
         - phpenv config-rm xdebug.ini || true
         - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require maglnet/composer-require-checker:dev-bandaid --working-dir=../tools
+        - composer require maglnet/composer-require-checker:^1 --working-dir=../tools
       install: composer update
       script:
         - ../tools/vendor/bin/composer-require-checker check ./composer.json

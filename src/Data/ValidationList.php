@@ -37,7 +37,7 @@ class ValidationList
         }
         return array(
             $code,
-            "\nConfig Check: ".($valid==$total?"OK":"Failed")."\n$valid/$total OK\n\n$message\n"
+            "\nConfig Check: ".($valid === $total ? "OK" : "Failed")."\n$valid/$total OK\n\n$message\n"
         );
     }
 }

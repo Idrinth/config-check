@@ -43,7 +43,7 @@ abstract class BaseSchemaStore implements SchemaStore
         if (isset($this->filemappings[$filename])) {
             $this->fill($list, $this->filemappings[$filename]);
         }
-        if ($uri) {
+        if (is_string($uri) && strlen($uri) > 0) {
             $this->fill($list, $uri);
         }
         return array_values($list);
