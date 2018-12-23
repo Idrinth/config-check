@@ -54,7 +54,7 @@ class Controller
     {
         $fileRetriever = new FileRetriever($config->getRootDir());
         return array(
-            'yml' => new YamlFileValidator(new Json($fileRetriever, $config->getMapping('yaml'))),
+            'yaml' => new YamlFileValidator(new Json($fileRetriever, $config->getMapping('yaml'))),
             'ini' => new IniFileValidator(new Json($fileRetriever, $config->getMapping('ini'))),
             'xml' => new XmlFileValidator(new Xml($fileRetriever, $config->getMapping('xml'))),
             'json' => new JsonFileValidator(new Json($fileRetriever, $config->getMapping('json'))),
