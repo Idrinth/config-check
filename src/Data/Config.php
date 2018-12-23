@@ -127,4 +127,15 @@ class Config
             $this->config[$type]['mapping'] :
             array();
     }
+
+    /**
+     * @return string[]|\Generator
+     */
+    public function getExtensions($type)
+    {
+        yield $type;
+        if(isset($this->config[$type]) && isset($this->config[$type]['additional-extensions'])) {
+            yield from $this->config[$type]['additional-extensions'];
+        }
+    }
 }
