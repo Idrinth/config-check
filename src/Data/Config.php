@@ -129,13 +129,13 @@ class Config
     }
 
     /**
-     * @return string[]|\Generator
+     * @return string[]
      */
     public function getExtensions($type)
     {
-        yield $type;
         if(isset($this->config[$type]) && isset($this->config[$type]['additional-extensions'])) {
-            yield from $this->config[$type]['additional-extensions'];
+            return array_merge(array($type), $this->config[$type]['additional-extensions']);
         }
+        return array($type);
     }
 }

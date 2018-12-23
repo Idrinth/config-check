@@ -88,7 +88,7 @@ class ControllerTest extends TestCase
         $config->expects($this->any())
             ->method('getExtensions')
             ->willReturnCallback(function($extension) {
-                yield $extension;
+                return array($extension);
             });
         return $config;
     }
