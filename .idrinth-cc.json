@@ -13,6 +13,11 @@
             ".idrinth-cc.json": "src/schema.json",
             "composer.json": "https://getcomposer.org/schema.json"
         },
-        "blacklist": ["broken.json"]
+        "blacklist": ["broken.json"],
+        "additional-extensions": ["lock"]
+    },
+    "yaml": {
+        "validity": true,
+        "additional-extensions": ["yml", "neon"]
     }
 }
