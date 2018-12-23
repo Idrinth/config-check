@@ -85,6 +85,11 @@ class ControllerTest extends TestCase
         $config->expects($this->any())
             ->method('getMapping')
             ->willReturn(array());
+        $config->expects($this->any())
+            ->method('getExtensions')
+            ->willReturnCallback(function ($extension) {
+                return array($extension);
+            });
         return $config;
     }
 }

@@ -90,6 +90,6 @@ class ValidateFileListTest extends TestCase
             array('php' => $this->getValidatorMock($exists))
         );
         $list = $this->getListMock($exists);
-        $instance->process($ext, $list);
+        $instance->process($ext, $ext, $list);
     }
 }
