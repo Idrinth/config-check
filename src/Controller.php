@@ -35,7 +35,9 @@ class Controller
         $data = new ValidationList();
         foreach (array('yaml', 'ini', 'xml', 'json') as $type) {
             if ($config->isEnabled($type)) {
-                $validator->process($type, $data, $config->getBlacklist($type));
+                foreach ($config->getExtensions($type) as $extension) {
+                    $validator->process($extension, $type, $data, $config->getBlacklist($type));
+                }
             }
         }
         list($this->code, $this->text) = $data->finish(

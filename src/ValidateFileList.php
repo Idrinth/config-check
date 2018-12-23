@@ -48,15 +48,16 @@ class ValidateFileList
      */
     public function process(
         $extension,
+        $type,
         ValidationList &$data,
         $blacklist = array()
     ) {
-        if (!isset($this->validators[$extension])) {
+        if (!isset($this->validators[$type])) {
             return $data;
         }
         foreach ($this->finder->find($this->baseDir, $extension, $blacklist) as $file) {
             $result = new FileResult(substr($file, strlen($this->baseDir) + 1));
-            foreach ($this->validators[$extension]->check(new File($file)) as $message) {
+            foreach ($this->validators[$type]->check(new File($file)) as $message) {
                 $result->addMessage($message);
             }
             $data->addFile($result);
