@@ -133,7 +133,7 @@ class Config
      */
     public function getExtensions($type)
     {
-        if(isset($this->config[$type]) && isset($this->config[$type]['additional-extensions'])) {
+        if (isset($this->config[$type]) && isset($this->config[$type]['additional-extensions'])) {
             return array_merge(array($type), $this->config[$type]['additional-extensions']);
         }
         return array($type);
