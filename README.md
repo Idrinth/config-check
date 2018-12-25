@@ -14,3 +14,7 @@ This project is checking any project's config files for correctness, including s
 | YAML | X | X | (JSON Schema planned) |
 | INI | X | X | (JSON Schema planned) |
 | XML | X | X | DTD, (XSD planned) |
+
+## Configuration
+
+Use a .idrinth-cc.json to configure what and how to check, see the one in the root of this repository and the [schema](https://github.com/Idrinth/config-check/blob/master/src/schema.json) to see what is possible.
