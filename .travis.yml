@@ -1,34 +1,88 @@
 language: php
 dist: trusty
 php:
-  - '5.4'
-  - '5.5'
-  - '5.6'
-  - '7.0'
-  - '7.1'
   - '7.2'
-matrix:
-  include:
-    - php: "5.3"
-      dist: precise
+  - '7.3'
 git:
-  depth: 3
-before_script:
-# no need to provide coverage more than once and no need for the speedbump otherwise
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then phpenv config-rm xdebug.ini || true ; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require codacy/coverage:dev-master --no-update ; fi
-# no need to test formatting more than once and php_codesniffer does not work with older php
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then composer require squizlabs/php_codesniffer:^3.1 --no-update ; fi
-# actually installing
-  - composer update
-script:
-# unit tests
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then vendor/bin/phpunit --testdox --bootstrap vendor/autoload.php test/ ; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then phpunit --testdox --coverage-text --coverage-clover build/logs/clover.xml --bootstrap vendor/autoload.php --whitelist src/ test/ ; fi
-# check standards
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then vendor/bin/phpcs -p --standard=PSR2 src test check-config ; fi
-# self-check config
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then php check-config ; fi
-after_success:
-# upload coverage
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/codacycoverage clover build/logs/clover.xml ; fi
+  depth: 3  
+cache:
+  directories:
+    - ~/.composer/cache/
+jobs:
+  include:
+# PHP Linting
+    - stage: PHP Linting
+      php: 7.3
+      name: PHP 7.3
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require jakub-onderka/php-parallel-lint:^1 --working-dir=../tools
+      install: true
+      script:
+        - ../tools/vendor/bin/parallel-lint --exclude vendor .
+    - stage: PHP Linting
+      php: 7.2
+      name: PHP 7.2
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require jakub-onderka/php-parallel-lint:^1 --working-dir=../tools
+      install: true
+      script:
+        - ../tools/vendor/bin/parallel-lint --exclude vendor .
+# Unit Tests
+    - stage: Test
+      php: 7.3
+      name: PHP 7.3
+      before_install:
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require codacy/coverage:dev-master --working-dir=../tools
+      install:
+        - composer update
+      script:
+        - vendor/bin/phpunit --testdox --coverage-text --coverage-clover clover.xml
+      after_success:
+        - ../tools/vendor/bin/codacycoverage clover clover.xml
+    - stage: Test
+      php: 7.2
+      name: PHP 7.2
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+      install:
+        - composer update
+      script:
+        - vendor/bin/phpunit --testdox
+# Static Code Analysis
+    - stage: Static Code Analysis
+      php: 7.3
+      name: "PHP Codesniffer: PSR12"
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require squizlabs/php_codesniffer:^3.2.2 --working-dir=../tools
+      install: true
+      script:
+        - ../tools/vendor/bin/phpcs -p --standard=PSR12 .
+# Pre-Tag
+    - stage: Pre-Tag
+      php: 7.3
+      name: PHPmetrics
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require phpmetrics/phpmetrics:^2.4.1 --working-dir=../tools
+      install:
+        - composer update
+      script:
+        - php ../tools/vendor/bin/phpmetrics . --exclude=vendor
+    - stage: Pre-Tag
+      php: 7.3
+      name: PHP Semver Checker
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer create-project tomzx/php-semver-checker-git:^0.7 --working-dir=../tools
+      install: composer update
+      script:
+        - ../tools/php-semver-checker-git/bin/php-semver-checker-git suggest --allow-detached --details --include-before=src --include-after=src

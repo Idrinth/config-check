@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+>
+    <testsuites>
+        <testsuite name="default">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -92,7 +92,7 @@ class ConfigTest extends TestCase
     public function testGetMapping()
     {
         $config = new Config(__DIR__, array());
-        $this->assertInternalType('array', $config->getMapping('ini'), 'INI-Mapping was not an array');
+        $this->assertIsArray($config->getMapping('ini'), 'INI-Mapping was not an array');
         $this->assertCount(0, $config->getMapping('xml'), 'XML-Mapping was filled');
         $this->assertCount(0, $config->getMapping('json'), 'JSON-Mapping was filled');
     }
