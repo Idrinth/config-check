@@ -6,6 +6,7 @@ use De\Idrinth\ConfigCheck\Data\File;
 use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Message\WarningMessage;
+use Exception;
 
 abstract class FileValidator
 {
@@ -35,11 +36,16 @@ abstract class FileValidator
         if (!$this->validateContent($results, $file->getContent())) {
             return $results;
         }
-        return $this->validateSchema(
-            $file->getName(),
-            $results,
-            $file->getContent()
-        );
+        try {
+            return $this->validateSchema(
+                $file->getName(),
+                $results,
+                $file->getContent()
+            );
+        } catch (Exception $exception) {
+            $results[] = new ErrorMessage($exception->getMessage());
+            return $results;
+        }
     }
 
     /**

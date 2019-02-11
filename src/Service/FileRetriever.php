@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Service;
 
 class FileRetriever
@@ -22,7 +23,10 @@ class FileRetriever
      */
     public function get($uri)
     {
-        if (!preg_match('/^.+?:\\/\\//', $uri)) {
+        if (strpos($uri, 'cwd://') === 0) {
+            return file_get_contents(str_replace('cwd://', $this->root . DIRECTORY_SEPARATOR, $uri));
+        }
+        if(!preg_match('/^.+?:\\/\\//', $uri)) {
             $uri = str_replace('/', DIRECTORY_SEPARATOR, $uri);
             return file_get_contents(
                 is_file($uri) ?
