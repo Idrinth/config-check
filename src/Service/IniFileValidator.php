@@ -45,7 +45,7 @@ class IniFileValidator extends FileValidator
      */
     private function getFromInternalError($scanner, $sections, array $error)
     {
-        $sections = $sections?'yes':'no';
+        $sections = $sections ? 'yes' : 'no';
         $scanners = array('Normal','Raw','Typed');
         return "Can't parse with Scanner[{$scanners[$scanner]}] Sections[$sections]: {$error['message']}";
     }

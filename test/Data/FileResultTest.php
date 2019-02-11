@@ -16,9 +16,9 @@ class FileResultTest extends TestCase
         $this->internalGetMessage(
             array(
                 array('', ''),//verbosity 0
-                array("\n[F] ".__DIR__."\n1", "\n[F] ".__DIR__."\n1"),//verbosity 1
-                array("\n[F] ".__DIR__."\n2", "\n[F] ".__DIR__."\n2"),//verbosity 2
-                array("\n[F] ".__DIR__."\n3", "\n[F] ".__DIR__."\n3"),//verbosity 3
+                array("\n[F] " . __DIR__ . "\n1", "\n[F] " . __DIR__ . "\n1"),//verbosity 1
+                array("\n[F] " . __DIR__ . "\n2", "\n[F] " . __DIR__ . "\n2"),//verbosity 2
+                array("\n[F] " . __DIR__ . "\n3", "\n[F] " . __DIR__ . "\n3"),//verbosity 3
             ),
             $this->getMockedMessage(true)
         );
@@ -32,9 +32,9 @@ class FileResultTest extends TestCase
         $this->internalGetMessage(
             array(
                 array('', ''),//verbosity 0
-                array('', "\n[F] ".__DIR__."\n1"),//verbosity 1
-                array('', "\n[F] ".__DIR__."\n2"),//verbosity 2
-                array("\n[X] ".__DIR__."\n3", "\n[F] ".__DIR__."\n3"),//verbosity 3
+                array('', "\n[F] " . __DIR__ . "\n1"),//verbosity 1
+                array('', "\n[F] " . __DIR__ . "\n2"),//verbosity 2
+                array("\n[X] " . __DIR__ . "\n3", "\n[F] " . __DIR__ . "\n3"),//verbosity 3
             ),
             $this->getMockedMessage()
         );
@@ -50,7 +50,7 @@ class FileResultTest extends TestCase
                 array('', ''),//verbosity 0
                 array('', ""),//verbosity 1
                 array('', ""),//verbosity 2
-                array("\n[X] ".__DIR__."\n3", "\n[X] ".__DIR__."\n3"),//verbosity 3
+                array("\n[X] " . __DIR__ . "\n3", "\n[X] " . __DIR__ . "\n3"),//verbosity 3
             ),
             $this->getMockedMessage(false)
         );
@@ -65,7 +65,7 @@ class FileResultTest extends TestCase
             array('', ''),//verbosity 0
             array('', ''),//verbosity 1
             array('', ''),//verbosity 2
-            array("\n[X] ".__DIR__."\n", "\n[X] ".__DIR__."\n")//verbosity 3
+            array("\n[X] " . __DIR__ . "\n", "\n[X] " . __DIR__ . "\n")//verbosity 3
         ));
     }
 
@@ -81,7 +81,7 @@ class FileResultTest extends TestCase
         }
         $this->assertEquals(
             $asserts[1][0],
-            $instance."",
+            $instance . "",
             "__toString failed"
         );
         $this->assertEquals(

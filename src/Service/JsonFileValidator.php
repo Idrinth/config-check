@@ -11,7 +11,7 @@ use JsonSchema\Validator;
 class JsonFileValidator extends FileValidator
 {
     /**
-     * @var Validator 
+     * @var Validator
      */
     private $validator;
 
@@ -33,7 +33,7 @@ class JsonFileValidator extends FileValidator
     {
         $json = json_decode($content);
         if ($json === null) {
-            $results[] = new ErrorMessage("File is not parseable: ".json_last_error_msg());
+            $results[] = new ErrorMessage("File is not parseable: " . json_last_error_msg());
             return false;
         }
         if (!is_object($json) || !property_exists($json, '$schema')) {

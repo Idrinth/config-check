@@ -27,7 +27,7 @@ class FileRetriever
             return file_get_contents(
                 is_file($uri) ?
                 $uri :
-                $this->root.DIRECTORY_SEPARATOR.$uri
+                $this->root . DIRECTORY_SEPARATOR . $uri
             );
         }
         if (extension_loaded('curl')) {

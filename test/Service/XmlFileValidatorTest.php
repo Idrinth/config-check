@@ -80,7 +80,7 @@ class XmlFileValidatorTest extends FileValidatorTest
         $this->assertInstanceOf(
             'De\Idrinth\ConfigCheck\Message\NoticeMessage',
             $return[0],
-            "The message was of an unexpected type: ".get_class($return[0])
+            "The message was of an unexpected type: " . get_class($return[0])
         );
     }
 }

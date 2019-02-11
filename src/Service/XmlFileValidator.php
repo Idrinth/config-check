@@ -54,7 +54,7 @@ class XmlFileValidator extends FileValidator
      */
     private function getFromLibXML(LibXMLError $error)
     {
-        $levels = array(LIBXML_ERR_ERROR => 'Error',LIBXML_ERR_FATAL=>'Fatal',LIBXML_ERR_WARNING=>'Warning');
+        $levels = array(LIBXML_ERR_ERROR => 'Error',LIBXML_ERR_FATAL => 'Fatal',LIBXML_ERR_WARNING => 'Warning');
         return "[{$levels[$error->level]}] Line $error->line, Column $error->column: $error->message";
     }
 
