@@ -3,16 +3,16 @@
 namespace De\Idrinth\ConfigCheck\Test\Service;
 
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
+use JsonSchema\Validator;
 
 class JsonFileValidatorTest extends FileValidatorTest
 {
-
     /**
      * @return JsonFileValidator
      */
     protected function getInstance()
     {
-        return new JsonFileValidator($this->getSchemaStoreMock());
+        return new JsonFileValidator($this->getSchemaStoreMock(), $this->getMockBuilder(Validator::class)->getMock());
     }
 
     /**

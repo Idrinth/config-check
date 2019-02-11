@@ -9,7 +9,6 @@ use De\Idrinth\ConfigCheck\Message\WarningMessage;
 
 abstract class FileValidator
 {
-
     /**
      * @var SchemaStore
      */

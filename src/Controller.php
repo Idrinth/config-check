@@ -12,6 +12,7 @@ use De\Idrinth\ConfigCheck\Service\IniFileValidator;
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 use De\Idrinth\ConfigCheck\Service\XmlFileValidator;
 use De\Idrinth\ConfigCheck\Service\YamlFileValidator;
+use JsonSchema\Validator;
 
 class Controller
 {
@@ -57,7 +58,7 @@ class Controller
             'yaml' => new YamlFileValidator(new Json($fileRetriever, $config->getMapping('yaml'))),
             'ini' => new IniFileValidator(new Json($fileRetriever, $config->getMapping('ini'))),
             'xml' => new XmlFileValidator(new Xml($fileRetriever, $config->getMapping('xml'))),
-            'json' => new JsonFileValidator(new Json($fileRetriever, $config->getMapping('json'))),
+            'json' => new JsonFileValidator(new Json($fileRetriever, $config->getMapping('json')), new Validator()),
         );
     }
 

@@ -9,7 +9,6 @@ use RegexIterator;
 
 class FileFinder
 {
-
     /**
      * @param string $root
      * @param string $extension

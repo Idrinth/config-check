@@ -2,12 +2,28 @@
 
 namespace De\Idrinth\ConfigCheck\Service;
 
+use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Message;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Message\NoticeMessage;
+use JsonSchema\Validator;
 
 class JsonFileValidator extends FileValidator
 {
+    /**
+     * @var Validator 
+     */
+    private $validator;
+
+    /**
+     * @param SchemaStore $schemaStore
+     * @param Validator $validator
+     */
+    public function __construct(SchemaStore $schemaStore, Validator $validator)
+    {
+        parent::__construct($schemaStore);
+        $this->validator = $validator;
+    }
     /**
      * @param Message[] $results
      * @param string $content
@@ -28,13 +44,24 @@ class JsonFileValidator extends FileValidator
     }
 
     /**
-     * @param type $filename
+     * @param string $filename
      * @param Message[] $results
      * @param string $content
      * @return Message[]
      */
     protected function validateSchema($filename, array &$results, $content)
     {
+        $json = json_decode($content);
+        $schemata = $this->schemaStore->get($filename, property_exists($json, '$schema') ? $json->{'$schema'} : null);
+        if (!$schemata) {
+            return $results;
+        }
+        foreach ($schemata as $schema) {
+            $this->validator->validate($json, $schema);
+            foreach ($this->validator->getErrors() as $error) {
+                $results[] = new ErrorMessage(sprintf("[%s] %s\n", $error['property'], $error['message']));
+            }
+        }
         return $results;
     }
 }
