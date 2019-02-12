@@ -9,7 +9,6 @@ use De\Idrinth\Yaml\YamlException;
 
 class YamlFileValidator extends FileValidator
 {
-
     /**
      * @param Message[] $results
      * @param string $content

@@ -16,10 +16,7 @@ class IniFileValidator extends FileValidator
     protected function validateContent(array &$results, $content)
     {
         $isValid = true;
-        $scanners = array(INI_SCANNER_NORMAL, INI_SCANNER_RAW);
-        if (version_compare(PHP_VERSION, '5.6.1', '>=')) {
-            $scanners[] = INI_SCANNER_TYPED;//not avaible before
-        }
+        $scanners = array(INI_SCANNER_NORMAL, INI_SCANNER_RAW, INI_SCANNER_TYPED);
         foreach (array(true, false) as $sections) {
             foreach ($scanners as $scanner) {
                 if (!@parse_ini_string($content, $sections, $scanner)) {

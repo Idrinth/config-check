@@ -27,17 +27,23 @@ class FileRetriever
             return file_get_contents(str_replace('cwd://', $this->root . DIRECTORY_SEPARATOR, $uri));
         }
         if (!preg_match('/^.+?:\\/\\//', $uri)) {
-            $uri = str_replace('/', DIRECTORY_SEPARATOR, $uri);
-            return file_get_contents(
-                is_file($uri) ?
-                $uri :
-                $this->root . DIRECTORY_SEPARATOR . $uri
-            );
+            return $this->getFromFilesystem($uri);
         }
-        if (extension_loaded('curl')) {
-            return $this->getCurled($uri);
-        }
-        return file_get_contents($uri);
+        return extension_loaded('curl') ? $this->getCurled($uri) : file_get_contents($uri);
+    }
+
+    /**
+     * @param string $uri
+     * @return string
+     */
+    private function getFromFilesystem(string $uri): string
+    {
+        $uri = str_replace('/', DIRECTORY_SEPARATOR, $uri);
+        return file_get_contents(
+            is_file($uri) ?
+            $uri :
+            $this->root . DIRECTORY_SEPARATOR . $uri
+        );
     }
 
     /**
