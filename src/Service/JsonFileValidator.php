@@ -2,39 +2,75 @@
 
 namespace De\Idrinth\ConfigCheck\Service;
 
+use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Message;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Message\NoticeMessage;
+use JsonSchema\Validator;
 
 class JsonFileValidator extends FileValidator
 {
     /**
-     * @param Message[] $results
+     * @var Validator
+     */
+    private $validator;
+
+    /**
+     * @param SchemaStore $schemaStore
+     * @param Validator $validator
+     */
+    public function __construct(SchemaStore $schemaStore, Validator $validator)
+    {
+        parent::__construct($schemaStore);
+        $this->validator = $validator;
+    }
+
+    /**
      * @param string $content
      * @return boolean
      */
-    protected function validateContent(array &$results, $content)
+    protected function validateContent($content): bool
     {
         $json = json_decode($content);
-        if ($json === null) {
-            $results[] = new ErrorMessage("File is not parseable: ".json_last_error_msg());
-            return false;
-        }
-        if (!is_object($json) || !property_exists($json, '$schema')) {
-            $results[] = new NoticeMessage("No schema provided");
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->error("File is not parseable: " . json_last_error_msg());
             return false;
         }
         return true;
     }
 
     /**
-     * @param type $filename
-     * @param Message[] $results
+     * @param string $filename
      * @param string $content
-     * @return Message[]
+     * @return void
      */
-    protected function validateSchema($filename, array &$results, $content)
+    protected function validateSchema($filename, $content): void
     {
-        return $results;
+        $json = json_decode($content);
+        $hasSchema = is_object($json) && property_exists($json, '$schema');
+        $schemata = $this->schemaStore->get($filename, $hasSchema ? $json->{'$schema'} : null);
+        if (!$schemata) {
+            if (!$hasSchema) {
+                $this->notice("No schema provided");
+            }
+            return;
+        }
+        $this->validateAll($json, $schemata);
+    }
+
+    /**
+     * @param mixed $json
+     * @param array $schemata
+     * @return void
+     */
+    private function validateAll($json, array $schemata): void
+    {
+        foreach ($schemata as $schema) {
+            $this->validator->reset();
+            $this->validator->validate($json, $schema);
+            foreach ($this->validator->getErrors() as $error) {
+                $this->error(sprintf("[%s] %s\n", $error['property'], $error['message']));
+            }
+        }
     }
 }

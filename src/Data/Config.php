@@ -15,7 +15,7 @@ class Config
      */
     public function __construct($rootDir, $cliOptions)
     {
-        $file = $rootDir.DIRECTORY_SEPARATOR.'.idrinth-cc.json';
+        $file = $rootDir . DIRECTORY_SEPARATOR . '.idrinth-cc.json';
         $this->config = is_file($file) ? json_decode(file_get_contents($file), true) : array();
         $this->config['warningsAsErrors'] = $this->processWarningStatus($cliOptions);
         $this->config['verbosity'] = $this->processVerbosity($cliOptions);

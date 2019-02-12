@@ -14,7 +14,7 @@ class JsonTest extends BaseSchemaStoreTest
         $instance = $this->getInstance(array('.idrinth-cc.json' => $this->getSchemaPath()));
         $results = $instance->get('.idrinth-cc.json');
         $this->assertCount(1, $results);
-        $this->assertInternalType('object', $results[0]);
+        $this->assertIsObject($results[0]);
     }
 
     /**

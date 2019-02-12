@@ -49,7 +49,7 @@ class FileResult
         if ($errors === 0 && $verbose < 3) {
             return '';
         }
-        $content = "\n[".($errors>0?'F':'X')."] $this->path\n";
+        $content = "\n[" . ($errors > 0 ? 'F' : 'X') . "] $this->path\n";
         foreach ($this->messages as $message) {
             $content .= $message->toString($verbose);
         }

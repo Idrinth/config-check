@@ -33,8 +33,8 @@ abstract class BaseSchemaStore implements SchemaStore
     }
 
     /**
-     * @param type $filename
-     * @param type $uri
+     * @param string $filename
+     * @param string $uri
      * @return array
      */
     public function get($filename, $uri = null)

@@ -17,7 +17,7 @@ class FileTest extends TestCase
             $instance->isFile(),
             "the file running is not considered a file."
         );
-        $instance2 = new File(__FILE__.'.oo');
+        $instance2 = new File(__FILE__ . '.oo');
         $this->assertFalse($instance2->isFile(), "a missing file is a file.");
     }
 
@@ -30,7 +30,7 @@ class FileTest extends TestCase
             $instance->isReadable(),
             "the file running is not considered readable."
         );
-        $instance2 = new File(__FILE__.'.oo');
+        $instance2 = new File(__FILE__ . '.oo');
         $this->assertFalse(
             $instance2->isReadable(),
             "a missing file is readable."
@@ -47,7 +47,7 @@ class FileTest extends TestCase
             $instance->getSize(),
             "the file running is considered empty."
         );
-        $instance2 = new File(__FILE__.'.oo');
+        $instance2 = new File(__FILE__ . '.oo');
         $this->assertEquals(
             0,
             $instance2->getSize(),
@@ -64,7 +64,7 @@ class FileTest extends TestCase
             $instance->getContent(),
             "the file running is considered empty."
         );
-        $instance2 = new File(__FILE__.'.oo');
+        $instance2 = new File(__FILE__ . '.oo');
         $this->assertEmpty(
             $instance2->getContent(),
             "a missing file has content."
@@ -81,7 +81,7 @@ class FileTest extends TestCase
             $instance->getName(),
             "the file running is considered empty."
         );
-        $instance2 = new File(__FILE__.'.oo');
+        $instance2 = new File(__FILE__ . '.oo');
         $this->assertEquals(
             'FileTest.php.oo',
             $instance2->getName(),

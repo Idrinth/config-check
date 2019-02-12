@@ -35,7 +35,7 @@ class FileRetrieverTest extends TestCase
             $results['fileGetContents'],
             "there was an amount of function-calls used that didn't match 1"
         );
-        $composerPath = realpath(dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'composer.json');
+        $composerPath = realpath(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'composer.json');
         $this->assertTrue(
             isset($results['fileGetContents'][$composerPath]),
             "composer path was not used to retrieve content."

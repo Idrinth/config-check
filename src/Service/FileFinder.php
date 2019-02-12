@@ -9,7 +9,6 @@ use RegexIterator;
 
 class FileFinder
 {
-
     /**
      * @param string $root
      * @param string $extension
@@ -23,7 +22,7 @@ class FileFinder
             new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($root)
             ),
-            '/^.+\.'.$extension.'$/i',
+            '/^.+\.' . $extension . '$/i',
             RecursiveRegexIterator::GET_MATCH
         );
         foreach ($files as $path) {
@@ -46,10 +45,10 @@ class FileFinder
         foreach ($blacklist as $forbidden) {
             $sysAdjusted = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);
             if (($forbidden{0} === '/' && preg_match(
-                '/^'.preg_quote($root.$sysAdjusted, '/').'/i',
+                '/^' . preg_quote($root . $sysAdjusted, '/') . '/i',
                 $path
             )) || ($forbidden{0} !== '/' && preg_match(
-                '/'.preg_quote($sysAdjusted, '/').'/i',
+                '/' . preg_quote($sysAdjusted, '/') . '/i',
                 $path
             ))
             ) {

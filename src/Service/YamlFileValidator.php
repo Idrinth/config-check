@@ -2,38 +2,32 @@
 
 namespace De\Idrinth\ConfigCheck\Service;
 
-use De\Idrinth\ConfigCheck\Message;
-use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\Yaml\Yaml;
 use De\Idrinth\Yaml\YamlException;
 
 class YamlFileValidator extends FileValidator
 {
-
     /**
-     * @param Message[] $results
      * @param string $content
      * @return boolean
      */
-    protected function validateContent(array &$results, $content)
+    protected function validateContent($content): bool
     {
         try {
             Yaml::decodeFromString($content);
             return true;
         } catch (YamlException $ex) {
-            $results[] = new ErrorMessage($ex->getMessage());
+            $this->error($ex->getMessage());
         }
         return false;
     }
 
     /**
-     * @param type $filename
-     * @param Message[] $results
+     * @param string $filename
      * @param string $content
-     * @return Message[]
+     * @return void
      */
-    protected function validateSchema($filename, array &$results, $content)
+    protected function validateSchema($filename, $content): void
     {
-        return $results;
     }
 }

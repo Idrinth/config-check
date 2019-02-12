@@ -3,8 +3,6 @@
 namespace De\Idrinth\ConfigCheck\Service;
 
 use De\Idrinth\ConfigCheck\Data\SchemaStore;
-use De\Idrinth\ConfigCheck\Message;
-use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use DOMDocument;
 use LibXMLError;
 
@@ -20,28 +18,27 @@ class XmlFileValidator extends FileValidator
     }
 
     /**
-     * @param Message[] $results
      * @param string $content
      * @return boolean
      */
-    protected function validateContent(array &$results, $content)
+    protected function validateContent($content): bool
     {
         $isValid = true;
         libxml_clear_errors();
         if (false === simplexml_load_string($content)) {
-            $results[] = new ErrorMessage("XML not parseable by SimpleXML");
+            $this->error("XML not parseable by SimpleXML");
             $isValid = false;
             foreach (libxml_get_errors() as $error) {
-                $results[] = new ErrorMessage($this->getFromLibXML($error));
+                $this->error($this->getFromLibXML($error));
             }
         }
         libxml_clear_errors();
         $document = new DOMDocument();
         if (false === $document->loadXML($content)) {
-            $results[] = new ErrorMessage("XML not parseable by DomDocument");
+            $this->error("XML not parseable by DomDocument");
             $isValid = false;
             foreach (libxml_get_errors() as $error) {
-                $results[] = new ErrorMessage($this->getFromLibXML($error));
+                $this->error($this->getFromLibXML($error));
             }
         }
         libxml_clear_errors();
@@ -52,34 +49,32 @@ class XmlFileValidator extends FileValidator
      * @param LibXMLError $error
      * @return string
      */
-    private function getFromLibXML(LibXMLError $error)
+    private function getFromLibXML(LibXMLError $error): string
     {
-        $levels = array(LIBXML_ERR_ERROR => 'Error',LIBXML_ERR_FATAL=>'Fatal',LIBXML_ERR_WARNING=>'Warning');
+        $levels = array(LIBXML_ERR_ERROR => 'Error',LIBXML_ERR_FATAL => 'Fatal',LIBXML_ERR_WARNING => 'Warning');
         return "[{$levels[$error->level]}] Line $error->line, Column $error->column: $error->message";
     }
 
     /**
-     * @param type $filename
-     * @param Message[] $results
+     * @param string $filename
      * @param string $content
-     * @return Message[]
+     * @return void
      */
-    protected function validateSchema($filename, array &$results, $content)
+    protected function validateSchema($filename, $content): void
     {
         $document = new DOMDocument();
         $document->loadXML($content);
-        if ($document->doctype) {
-            libxml_clear_errors();
-            if (!$document->validate()) {
-                $results[] = new ErrorMessage("XML doesn't match DTD");
-                foreach (libxml_get_errors() as $error) {
-                    $results[] = new ErrorMessage($this->getFromLibXML($error));
-                }
-            }
-            libxml_clear_errors();
-        } else {
-            $results[] = new Message\NoticeMessage("No DTD found.");
+        if (!$document->doctype) {
+            $this->notice("No DTD found.");
+            return;
         }
-        return $results;
+        libxml_clear_errors();
+        if (!$document->validate()) {
+            $results[] = $this->error("XML doesn't match DTD");
+            foreach (libxml_get_errors() as $error) {
+                $this->error($this->getFromLibXML($error));
+            }
+        }
+        libxml_clear_errors();
     }
 }

@@ -83,7 +83,7 @@ class RetrievalFakes
             self::$wasCalled[$function] :
             array();
         self::$wasCalled[$function][$param] = isset(self::$wasCalled[$function][$param]) ?
-            self::$wasCalled[$function][$param]+1 :
+            self::$wasCalled[$function][$param] + 1 :
             1;
     }
 

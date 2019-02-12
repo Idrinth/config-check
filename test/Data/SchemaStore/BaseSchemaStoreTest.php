@@ -49,6 +49,6 @@ abstract class BaseSchemaStoreTest extends TestCase
      */
     protected function getSchemaPath()
     {
-        return dirname(dirname(dirname(__DIR__))).DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'schema.json';
+        return dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'schema.json';
     }
 }
