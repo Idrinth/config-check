@@ -56,6 +56,17 @@ class JsonFileValidator extends FileValidator
             }
             return $results;
         }
+        return $this->validateAll($json, $schemata, $results);
+    }
+
+    /**
+     * @param mixed $json
+     * @param array $schemata
+     * @param Message[] $results
+     * @return Message[]
+     */
+    private function validateAll($json, array $schemata, array $results): array
+    {
         foreach ($schemata as $schema) {
             $this->validator->reset();
             $this->validator->validate($json, $schema);

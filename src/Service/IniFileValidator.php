@@ -16,22 +16,35 @@ class IniFileValidator extends FileValidator
     protected function validateContent(array &$results, $content)
     {
         $isValid = true;
-        $scanners = array(INI_SCANNER_NORMAL, INI_SCANNER_RAW, INI_SCANNER_TYPED);
-        foreach (array(true, false) as $sections) {
+        $scanners = [INI_SCANNER_NORMAL, INI_SCANNER_RAW, INI_SCANNER_TYPED];
+        foreach ([true, false] as $sections) {
             foreach ($scanners as $scanner) {
-                if (!@parse_ini_string($content, $sections, $scanner)) {
-                    $results[] = new ErrorMessage(
-                        $this->getFromInternalError(
-                            $scanner,
-                            $sections,
-                            error_get_last()
-                        )
-                    );
-                    $isValid = false;
-                }
+                $isValid = $this->checkContent($content, $sections, $scanner, $results) && $isValid;
             }
         }
         return $isValid;
+    }
+
+    /**
+     * @param string $content
+     * @param bool $sections
+     * @param int $scanner
+     * @param Message[] $results
+     * @return bool
+     */
+    private function checkContent($content, bool $sections, int $scanner, array &$results): bool
+    {
+        if (@parse_ini_string($content, $sections, $scanner)) {
+            return true;
+        }
+        $results[] = new ErrorMessage(
+            $this->getFromInternalError(
+                $scanner,
+                $sections,
+                error_get_last()
+            )
+        );
+        return false;
     }
 
     /**

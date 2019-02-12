@@ -30,10 +30,7 @@ abstract class FileValidator
     public function check(File $file)
     {
         $results = array();
-        if (!$this->isFileUseable($results, $file)) {
-            return $results;
-        }
-        if (!$this->validateContent($results, $file->getContent())) {
+        if (!$this->isFileUseable($results, $file) || !$this->validateContent($results, $file->getContent())) {
             return $results;
         }
         try {
