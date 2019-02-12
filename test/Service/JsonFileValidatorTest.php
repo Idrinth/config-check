@@ -48,7 +48,6 @@ class JsonFileValidatorTest extends FileValidatorTest
             $return,
             "there were less messages returned than expected"
         );
-        var_dump($return);
         $this->assertInstanceOf(
             'De\Idrinth\ConfigCheck\Message\NoticeMessage',
             $return[0],

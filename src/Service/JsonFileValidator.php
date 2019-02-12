@@ -32,7 +32,7 @@ class JsonFileValidator extends FileValidator
     protected function validateContent(array &$results, $content)
     {
         $json = json_decode($content);
-        if (json_last_error()) {
+        if (json_last_error() !== JSON_ERROR_NONE) {
             $results[] = new ErrorMessage("File is not parseable: " . json_last_error_msg());
             return false;
         }
@@ -48,11 +48,11 @@ class JsonFileValidator extends FileValidator
     protected function validateSchema($filename, array &$results, $content)
     {
         $json = json_decode($content);
-        $schemata = $this->schemaStore->get($filename, property_exists($json, '$schema') ? $json->{'$schema'} : null);
+        $hasSchema = is_object($json) && property_exists($json, '$schema');
+        $schemata = $this->schemaStore->get($filename, $hasSchema ? $json->{'$schema'} : null);
         if (!$schemata) {
-            if (!property_exists($json, '$schema')) {
+            if (!$hasSchema) {
                 $results[] = new NoticeMessage("No schema provided");
-                return $results;
             }
             return $results;
         }
