@@ -36,7 +36,7 @@ abstract class FileValidator
     public function check(File $file)
     {
         $this->results = [];
-        try {            
+        try {
             if ($this->isFileUseable($file) && $this->validateContent($file->getContent())) {
                 $this->validateSchema($file->getName(), $file->getContent());
             }
