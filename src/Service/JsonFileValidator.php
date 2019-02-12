@@ -24,16 +24,16 @@ class JsonFileValidator extends FileValidator
         parent::__construct($schemaStore);
         $this->validator = $validator;
     }
+
     /**
-     * @param Message[] $results
      * @param string $content
      * @return boolean
      */
-    protected function validateContent(array &$results, $content)
+    protected function validateContent($content): bool
     {
         $json = json_decode($content);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            $results[] = new ErrorMessage("File is not parseable: " . json_last_error_msg());
+            $this->error("File is not parseable: " . json_last_error_msg());
             return false;
         }
         return true;
@@ -41,39 +41,36 @@ class JsonFileValidator extends FileValidator
 
     /**
      * @param string $filename
-     * @param Message[] $results
      * @param string $content
-     * @return Message[]
+     * @return void
      */
-    protected function validateSchema($filename, array &$results, $content)
+    protected function validateSchema($filename, $content): void
     {
         $json = json_decode($content);
         $hasSchema = is_object($json) && property_exists($json, '$schema');
         $schemata = $this->schemaStore->get($filename, $hasSchema ? $json->{'$schema'} : null);
         if (!$schemata) {
             if (!$hasSchema) {
-                $results[] = new NoticeMessage("No schema provided");
+                $this->notice("No schema provided");
             }
-            return $results;
+            return;
         }
-        return $this->validateAll($json, $schemata, $results);
+        $this->validateAll($json, $schemata);
     }
 
     /**
      * @param mixed $json
      * @param array $schemata
-     * @param Message[] $results
-     * @return Message[]
+     * @return void
      */
-    private function validateAll($json, array $schemata, array $results): array
+    private function validateAll($json, array $schemata): void
     {
         foreach ($schemata as $schema) {
             $this->validator->reset();
             $this->validator->validate($json, $schema);
             foreach ($this->validator->getErrors() as $error) {
-                $results[] = new ErrorMessage(sprintf("[%s] %s\n", $error['property'], $error['message']));
+                $this->error(sprintf("[%s] %s\n", $error['property'], $error['message']));
             }
         }
-        return $results;
     }
 }
