@@ -2,7 +2,7 @@
     "verbosity": 2,
     "blacklist": ["/vendor", "/test"],
     "xml": {
-        "validity": false
+        "validity": true
     },
     "ini": {
         "validity": false

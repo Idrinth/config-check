@@ -5,19 +5,19 @@
     "type": "object",
     "properties": {
         "ini": {
-            "$ref": "#ext"
+            "$ref": "#/definitions/ext"
         },
         "yaml": {
-            "$ref": "#ext"
+            "$ref": "#/definitions/ext"
         },
         "xml": {
-            "$ref": "#ext"
+            "$ref": "#/definitions/ext"
         },
         "json": {
-            "$ref": "#ext"
+            "$ref": "#/definitions/ext"
         },
         "blacklist": {
-            "$ref": "#blacklist"
+            "$ref": "#/definitions/blacklist"
         },
         "verbosity": {
             "type": "integer",
@@ -61,7 +61,7 @@
                     }
                 },
                 "blacklist": {
-                    "$ref": "#blacklist"
+                    "$ref": "#/definitions/blacklist"
                 },
                 "additional-extensions": {
                     "type": "array",

@@ -110,7 +110,7 @@ class ConfigTest extends TestCase
         $this->assertEquals(3, $config1->getVerbosity(), "Verbosity did not match the expected value of 3.");
         $this->assertEquals($root, $config->getRootDir(), "The root dir was not stored as expected.");
         $this->assertTrue($config->isEnabled("json"), "Json was not enabled.");
-        $this->assertFalse($config->isEnabled("xml"), "Xml was enabled.");
+        $this->assertTrue($config->isEnabled("xml"), "Xml was enabled.");
         $this->assertCount(2, $config->getMapping('json'), 'JSON-Mapping was not filled');
         $this->assertArrayHasKey('.idrinth-cc.json', $config->getMapping('json'), 'JSON-Mapping was not filled');
         $this->assertArrayHasKey('composer.json', $config->getMapping('json'), 'JSON-Mapping was not filled');
