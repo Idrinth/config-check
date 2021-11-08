@@ -8,16 +8,16 @@ cache:
 jobs:
   include:
 # PHP Linting
-    - stage: PHP Linting
-      php: 8.0
-      name: PHP 8
-      before_install:
-        - phpenv config-rm xdebug.ini || true
-        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
-      install: true
-      script:
-        - ../tools/vendor/bin/parallel-lint --exclude vendor .
+#    - stage: PHP Linting
+#      php: 8.0
+#      name: PHP 8
+#      before_install:
+#        - phpenv config-rm xdebug.ini || true
+#        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+#        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
+#      install: true
+#      script:
+#        - ../tools/vendor/bin/parallel-lint --exclude vendor .
     - stage: PHP Linting
       php: 7.4
       name: PHP 7.4
@@ -49,18 +49,18 @@ jobs:
       script:
         - ../tools/vendor/bin/parallel-lint --exclude vendor .
 # Unit Tests
-    - stage: Test
-      php: 8.0
-      name: UT PHP 8
-      before_install:
-        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require codacy/coverage:dev-master --working-dir=../tools
-      install:
-        - composer update
-      script:
-        - vendor/bin/phpunit --testdox --coverage-text --coverage-clover clover.xml
-      after_success:
-        - ../tools/vendor/bin/codacycoverage clover clover.xml
+#    - stage: Test
+#      php: 8.0
+#      name: UT PHP 8
+#      before_install:
+#        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+#        - composer require codacy/coverage:dev-master --working-dir=../tools
+#      install:
+#        - composer update
+#      script:
+#        - vendor/bin/phpunit --testdox --coverage-text --coverage-clover clover.xml
+#      after_success:
+#        - ../tools/vendor/bin/codacycoverage clover clover.xml
     - stage: Test
       php: 7.4
       name: UT PHP 7.4
