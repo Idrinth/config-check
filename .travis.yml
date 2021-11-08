@@ -14,7 +14,7 @@ jobs:
       before_install:
         - phpenv config-rm xdebug.ini || true
         - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require php-parallel-lint/php-parallel-lint :^1 --working-dir=../tools
+        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
       install: true
       script:
         - ../tools/vendor/bin/parallel-lint --exclude vendor .
