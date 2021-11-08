@@ -1,5 +1,5 @@
 language: php
-dist: trusty
+
 git:
   depth: 3  
 cache:
@@ -9,12 +9,32 @@ jobs:
   include:
 # PHP Linting
     - stage: PHP Linting
+      php: 8.0
+      name: PHP 8
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require php-parallel-lint/php-parallel-lint :^1 --working-dir=../tools
+      install: true
+      script:
+        - ../tools/vendor/bin/parallel-lint --exclude vendor .
+    - stage: PHP Linting
+      php: 7.4
+      name: PHP 7.4
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
+        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
+      install: true
+      script:
+        - ../tools/vendor/bin/parallel-lint --exclude vendor .
+    - stage: PHP Linting
       php: 7.3
       name: PHP 7.3
       before_install:
         - phpenv config-rm xdebug.ini || true
         - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require jakub-onderka/php-parallel-lint:^1 --working-dir=../tools
+        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
       install: true
       script:
         - ../tools/vendor/bin/parallel-lint --exclude vendor .
@@ -24,14 +44,14 @@ jobs:
       before_install:
         - phpenv config-rm xdebug.ini || true
         - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer require jakub-onderka/php-parallel-lint:^1 --working-dir=../tools
+        - composer require php-parallel-lint/php-parallel-lint:^1 --working-dir=../tools
       install: true
       script:
         - ../tools/vendor/bin/parallel-lint --exclude vendor .
 # Unit Tests
     - stage: Test
-      php: 7.3
-      name: PHP 7.3
+      php: 8.0
+      name: UT PHP 8
       before_install:
         - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
         - composer require codacy/coverage:dev-master --working-dir=../tools
@@ -42,8 +62,26 @@ jobs:
       after_success:
         - ../tools/vendor/bin/codacycoverage clover clover.xml
     - stage: Test
+      php: 7.4
+      name: UT PHP 7.4
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+      install:
+        - composer update
+      script:
+        - vendor/bin/phpunit --testdox
+    - stage: Test
+      php: 7.3
+      name: UT PHP 7.3
+      before_install:
+        - phpenv config-rm xdebug.ini || true
+      install:
+        - composer update
+      script:
+        - vendor/bin/phpunit --testdox
+    - stage: Test
       php: 7.2
-      name: PHP 7.2
+      name: UT PHP 7.2
       before_install:
         - phpenv config-rm xdebug.ini || true
       install:
@@ -52,7 +90,7 @@ jobs:
         - vendor/bin/phpunit --testdox
 # Static Code Analysis
     - stage: Static Code Analysis
-      php: 7.3
+      php: 7.4
       name: "PHP Codesniffer: PSR12"
       before_install:
         - phpenv config-rm xdebug.ini || true
@@ -63,7 +101,7 @@ jobs:
         - ../tools/vendor/bin/phpcs -p --standard=PSR12 .
 # Pre-Tag
     - stage: Pre-Tag
-      php: 7.3
+      php: 7.4
       name: PHPmetrics
       before_install:
         - phpenv config-rm xdebug.ini || true
@@ -73,13 +111,3 @@ jobs:
         - composer update
       script:
         - php ../tools/vendor/bin/phpmetrics . --exclude=vendor
-    - stage: Pre-Tag
-      php: 7.3
-      name: PHP Semver Checker
-      before_install:
-        - phpenv config-rm xdebug.ini || true
-        - mkdir ../tools && composer init --name=putg/tools --working-dir=../tools
-        - composer create-project tomzx/php-semver-checker-git:^0.7 --working-dir=../tools
-      install: composer update
-      script:
-        - ../tools/php-semver-checker-git/bin/php-semver-checker-git suggest --allow-detached --details --include-before=src --include-after=src

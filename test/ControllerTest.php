@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\ConfigCheck\Test;
+namespace De\Idrinth\ConfigCheck;
 
 use De\Idrinth\ConfigCheck\Controller;
 use De\Idrinth\ConfigCheck\Data\Config;

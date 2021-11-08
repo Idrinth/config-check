@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\ConfigCheck\TestData;
+namespace De\Idrinth\ConfigCheck\Data;
 
 use De\Idrinth\ConfigCheck\Data\FileResult;
 use PHPUnit\Framework\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\ConfigCheck\Test\Data\SchemaStore;
+namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 use De\Idrinth\ConfigCheck\Data\SchemaStore\Xml;
 
