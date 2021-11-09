@@ -11,7 +11,7 @@ This project is checking any project's config files for correctness, including s
 | Format | File | Parseable | Schema |
 | ------------- | ------------- | ------------- | ------------- |
 | JSON | X | X | JSON Schema |
-| YAML | X | X | (JSON Schema planned) |
+| YAML | X | X | JSON Schema |
 | INI | X | X | (JSON Schema planned) |
 | XML | X | X | DTD, (XSD planned) |
 
