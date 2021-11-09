@@ -44,10 +44,11 @@ class FileFinder
     {
         foreach ($blacklist as $forbidden) {
             $sysAdjusted = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);
-            if (($forbidden{0} === '/' && preg_match(
+            $firstChar = substr($forbidden, 0, 1);
+            if (($firstChar === '/' && preg_match(
                 '/^' . preg_quote($root . $sysAdjusted, '/') . '/i',
                 $path
-            )) || ($forbidden{0} !== '/' && preg_match(
+            )) || ($firstChar !== '/' && preg_match(
                 '/' . preg_quote($sysAdjusted, '/') . '/i',
                 $path
             ))

@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\ConfigCheck\Test\Service;
+namespace De\Idrinth\ConfigCheck\Service;
 
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 use JsonSchema\Validator;

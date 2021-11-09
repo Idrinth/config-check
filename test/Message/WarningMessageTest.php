@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\ConfigCheck\Test\Message;
+namespace De\Idrinth\ConfigCheck\Message;
 
 use De\Idrinth\ConfigCheck\Message\WarningMessage;
 

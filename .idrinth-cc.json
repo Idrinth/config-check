@@ -1,5 +1,5 @@
 {
-    "verbosity": 2,
+    "verbosity": 3,
     "blacklist": ["/vendor", "/test"],
     "xml": {
         "validity": true
@@ -18,6 +18,9 @@
     },
     "yaml": {
         "validity": true,
+        "mapping": {
+            ".travis.yml": "https://raw.githubusercontent.com/travis-ci/travis-yml/master/schema.json"
+        },
         "additional-extensions": ["yml", "neon"]
     }
 }
