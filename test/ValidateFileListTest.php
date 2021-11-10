@@ -15,7 +15,6 @@ class ValidateFileListTest extends TestCase
     private function getSchemaStoreMock()
     {
         $store = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\SchemaStore')
-            ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $store->expects($this->any())
             ->method('get')

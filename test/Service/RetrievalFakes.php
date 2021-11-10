@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Service;
 
 class RetrievalFakes
@@ -136,7 +137,7 @@ namespace De\Idrinth\ConfigCheck\Service;
  */
 function extension_loaded($name)
 {
-    return \De\Idrinth\ConfigCheck\Test\Service\RetrievalFakes::extensionLoaded($name);
+    return \De\Idrinth\ConfigCheck\Service\RetrievalFakes::extensionLoaded($name);
 }
 
 /**
@@ -146,7 +147,7 @@ function extension_loaded($name)
  */
 function file_get_contents($file)
 {
-    return \De\Idrinth\ConfigCheck\Test\Service\RetrievalFakes::fileGetContents($file);
+    return \De\Idrinth\ConfigCheck\Service\RetrievalFakes::fileGetContents($file);
 }
 
 /**
@@ -156,5 +157,5 @@ function file_get_contents($file)
  */
 function curl_exec($curl)
 {
-    return \De\Idrinth\ConfigCheck\Test\Service\RetrievalFakes::curlExec($curl);
+    return \De\Idrinth\ConfigCheck\Service\RetrievalFakes::curlExec($curl);
 }

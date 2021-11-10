@@ -130,7 +130,6 @@ abstract class FileValidatorTest extends TestCase
     protected function getSchemaStoreMock($return = array())
     {
         $store = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\SchemaStore')
-            ->setConstructorArgs(array(__FILE__))
             ->getMock();
         $store->expects($this->any())
             ->method('get')
