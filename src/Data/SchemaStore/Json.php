@@ -1,4 +1,5 @@
 <?php
+
 namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 class Json extends BaseSchemaStore
