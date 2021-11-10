@@ -1,5 +1,5 @@
 {
-    "verbosity": 2,
+    "verbosity": 3,
     "blacklist": ["/vendor", "/test"],
     "xml": {
         "validity": true
