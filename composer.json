@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^7.2 | ^8",
-        "idrinth/yaml-facade": "^1.1",
+        "idrinth/yaml-facade": "dev-master",
         "justinrainbow/json-schema": "^5.2.8"
     },
     "require-dev": {
