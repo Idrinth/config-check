@@ -13,7 +13,7 @@
         "check-config"
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2 | ^8",
         "idrinth/yaml-facade": "^1.1",
         "justinrainbow/json-schema": "^5.2.8"
     },
