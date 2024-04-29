@@ -4,7 +4,7 @@ namespace De\Idrinth\ConfigCheck\Service;
 
 use De\Idrinth\ConfigCheck\Service\IniFileValidator;
 
-class IniFileValidatorTest extends FileValidatorTest
+class IniFileValidatorTestCase extends FileValidatorTestCase
 {
 
     /**

@@ -9,26 +9,12 @@ use JsonSchema\Validator;
 
 class YamlFileValidator extends FileValidator
 {
-    /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * @param SchemaStore $schemaStore
-     * @param Validator $validator
-     */
-    public function __construct(SchemaStore $schemaStore, Validator $validator)
+    public function __construct(SchemaStore $schemaStore, private Validator $validator)
     {
         parent::__construct($schemaStore);
-        $this->validator = $validator;
     }
 
-    /**
-     * @param string $content
-     * @return boolean
-     */
-    protected function validateContent($content): bool
+    protected function validateContent(string $content): bool
     {
         try {
             Yaml::decodeFromString($content);
@@ -44,7 +30,7 @@ class YamlFileValidator extends FileValidator
      * @param string $content
      * @return void
      */
-    protected function validateSchema($filename, $content): void
+    protected function validateSchema(string $filename, string $content): void
     {
         $yaml = Yaml::decodeFromString($content);
         $schemata = $this->schemaStore->get($filename, null);
@@ -55,12 +41,7 @@ class YamlFileValidator extends FileValidator
         $this->validateAll($yaml, $schemata);
     }
 
-    /**
-     * @param mixed $yaml
-     * @param array $schemata
-     * @return void
-     */
-    private function validateAll($yaml, array $schemata): void
+    private function validateAll(mixed $yaml, array $schemata): void
     {
         foreach ($schemata as $schema) {
             $this->validator->reset();

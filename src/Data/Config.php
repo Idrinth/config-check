@@ -4,29 +4,18 @@ namespace De\Idrinth\ConfigCheck\Data;
 
 class Config
 {
-    /**
-     * @var array()
-     */
-    private $config;
+    private array $config;
 
-    /**
-     * @param string $rootDir
-     * @param array $cliOptions
-     */
-    public function __construct($rootDir, $cliOptions)
+    public function __construct(string $rootDir, array $cliOptions)
     {
         $file = $rootDir . DIRECTORY_SEPARATOR . '.idrinth-cc.json';
-        $this->config = is_file($file) ? json_decode(file_get_contents($file), true) : array();
+        $this->config = is_file($file) ? json_decode(file_get_contents($file), true) : [];
         $this->config['warningsAsErrors'] = $this->processWarningStatus($cliOptions);
         $this->config['verbosity'] = $this->processVerbosity($cliOptions);
         $this->config['root'] = $rootDir;
     }
 
-    /**
-     * @param array $cliOptions
-     * @return boolean
-     */
-    private function processWarningStatus($cliOptions)
+    private function processWarningStatus(array $cliOptions): bool
     {
         if (array_key_exists('w', $cliOptions)) {
             return true;
@@ -34,11 +23,7 @@ class Config
         return isset($this->config['warningsAsErrors']) && $this->config['warningsAsErrors'];
     }
 
-    /**
-     * @param array $cliOptions
-     * @return int
-     */
-    private function processVerbosity($cliOptions)
+    private function processVerbosity(array $cliOptions): int
     {
         return max(array(
             isset($this->config['verbosity']) ? (int) $this->config['verbosity'] : 0,
@@ -46,24 +31,15 @@ class Config
         ));
     }
 
-    /**
-     * @param array $params
-     * @param string $key
-     * @return int
-     */
-    private function getParamCount(array $params, $key)
+    private function getParamCount(array $params, string $key): string
     {
-        if (!array_key_exists($key, $params)) {
+        if (! isset($params[$key]) && ! array_key_exists($key, $params)) {
             return 0;
         }
         return is_array($params[$key]) ? count($params[$key]) : 1;
     }
 
-    /**
-     * @param string $type
-     * @return boolean
-     */
-    public function isEnabled($type)
+    public function isEnabled(string $type): bool
     {
         return !isset($this->config[$type]) ||
             !isset($this->config[$type]['validity']) ||
@@ -74,68 +50,47 @@ class Config
      * @param string $type
      * @return string[]
      */
-    public function getBlacklist($type)
+    public function getBlacklist(string $type): array
     {
-        $sources = array();
+        $sources = [];
         if (isset($this->config['blacklist']) && is_array($this->config['blacklist'])) {
             $sources[] = $this->config['blacklist'];
         }
         if (isset($this->config[$type]['blacklist']) && is_array($this->config[$type]['blacklist'])) {
             $sources[] = $this->config[$type]['blacklist'];
         }
-        switch (count($sources)) {
-            case 2:
-                return array_merge($sources[0], $sources[1]);
-            case 1:
-                return $sources[0];
-            case 0:
-            default:
-                return array('/vendor');
-        }
+        return match (count($sources)) {
+            2 => array_merge($sources[0], $sources[1]),
+            1 => $sources[0],
+            default => array('/vendor'),
+        };
     }
 
-    /**
-     * @return string
-     */
-    public function getRootDir()
+    public function getRootDir(): string
     {
         return $this->config['root'];
     }
 
-    /**
-     * @return int
-     */
-    public function getVerbosity()
+    public function getVerbosity(): int
     {
         return $this->config['verbosity'];
     }
 
-    /**
-     * @return boolean
-     */
-    public function hasWarningsAsErrors()
+    public function hasWarningsAsErrors(): bool
     {
         return $this->config['warningsAsErrors'];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getMapping($type)
+    public function getMapping(string $type): array
     {
-        return isset($this->config[$type]) && isset($this->config[$type]['mapping']) ?
-            $this->config[$type]['mapping'] :
-            array();
+        return $this->config[$type]['mapping'] ?? [];
     }
 
     /**
      * @return string[]
      */
-    public function getExtensions($type)
+    public function getExtensions($type): array
     {
-        if (isset($this->config[$type]) && isset($this->config[$type]['additional-extensions'])) {
-            return array_merge(array($type), $this->config[$type]['additional-extensions']);
-        }
-        return array($type);
+        return array_merge(array($type), $this->config[$type]['additional-extensions'] ?? []);
     }
 }

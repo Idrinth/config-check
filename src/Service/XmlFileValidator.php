@@ -8,20 +8,13 @@ use LibXMLError;
 
 class XmlFileValidator extends FileValidator
 {
-    /**
-     * @param SchemaStore $schemaStore
-     */
     public function __construct(SchemaStore $schemaStore)
     {
         parent::__construct($schemaStore);
         libxml_use_internal_errors(true);
     }
 
-    /**
-     * @param string $content
-     * @return boolean
-     */
-    protected function validateContent($content): bool
+    protected function validateContent(string $content): bool
     {
         $isValid = true;
         libxml_clear_errors();
@@ -45,22 +38,13 @@ class XmlFileValidator extends FileValidator
         return $isValid;
     }
 
-    /**
-     * @param LibXMLError $error
-     * @return string
-     */
     private function getFromLibXML(LibXMLError $error): string
     {
         $levels = array(LIBXML_ERR_ERROR => 'Error',LIBXML_ERR_FATAL => 'Fatal',LIBXML_ERR_WARNING => 'Warning');
         return "[{$levels[$error->level]}] Line $error->line, Column $error->column: $error->message";
     }
 
-    /**
-     * @param string $filename
-     * @param string $content
-     * @return void
-     */
-    protected function validateSchema($filename, $content): void
+    protected function validateSchema(string $filename, string $content): void
     {
         $document = new DOMDocument();
         $document->loadXML($content);
@@ -70,7 +54,7 @@ class XmlFileValidator extends FileValidator
         }
         libxml_clear_errors();
         if (!$document->validate()) {
-            $results[] = $this->error("XML doesn't match DTD");
+            $this->error("XML doesn't match DTD");
             foreach (libxml_get_errors() as $error) {
                 $this->error($this->getFromLibXML($error));
             }

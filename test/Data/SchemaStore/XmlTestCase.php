@@ -4,7 +4,7 @@ namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 use De\Idrinth\ConfigCheck\Data\SchemaStore\Xml;
 
-class XmlTest extends BaseSchemaStoreTest
+class XmlTestCase extends BaseSchemaStoreTestCase
 {
     /**
      * @test

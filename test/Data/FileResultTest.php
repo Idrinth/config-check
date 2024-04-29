@@ -73,7 +73,7 @@ class FileResultTest extends TestCase
      * @param array $asserts the expected results
      * @param Message|Null $message
      */
-    private function internalGetMessage($asserts = array(), $message = null)
+    private function internalGetMessage($asserts = [], $message = null)
     {
         $instance = new FileResult(__DIR__);
         if ($message) {

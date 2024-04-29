@@ -5,7 +5,7 @@ namespace De\Idrinth\ConfigCheck\Service;
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 use JsonSchema\Validator;
 
-class JsonFileValidatorTest extends FileValidatorTest
+class JsonFileValidatorTestCase extends FileValidatorTestCase
 {
     /**
      * @return JsonFileValidator

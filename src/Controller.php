@@ -8,6 +8,7 @@ use De\Idrinth\ConfigCheck\Data\SchemaStore\Xml;
 use De\Idrinth\ConfigCheck\Data\ValidationList;
 use De\Idrinth\ConfigCheck\Service\FileFinder;
 use De\Idrinth\ConfigCheck\Service\FileRetriever;
+use De\Idrinth\ConfigCheck\Service\FileValidator;
 use De\Idrinth\ConfigCheck\Service\IniFileValidator;
 use De\Idrinth\ConfigCheck\Service\JsonFileValidator;
 use De\Idrinth\ConfigCheck\Service\XmlFileValidator;
@@ -16,19 +17,9 @@ use JsonSchema\Validator;
 
 class Controller
 {
-    /**
-     * @var int
-     */
-    private $code;
+    private int $code;
+    private string $text;
 
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $validators = $this->getValidators($config);
@@ -49,9 +40,9 @@ class Controller
 
     /**
      * @param Config $config
-     * @return FileValidator[]
+     * @return array<string, FileValidator>
      */
-    private function getValidators(Config $config)
+    private function getValidators(Config $config): array
     {
         $fileRetriever = new FileRetriever($config->getRootDir());
         return array(
@@ -62,18 +53,12 @@ class Controller
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getCode()
+    public function getCode(): int
     {
         return (int) $this->code;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }

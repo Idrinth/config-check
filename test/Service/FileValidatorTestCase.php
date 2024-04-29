@@ -7,7 +7,7 @@ use De\Idrinth\ConfigCheck\Data\SchemaStore;
 use De\Idrinth\ConfigCheck\Service\FileValidator;
 use PHPUnit\Framework\TestCase;
 
-abstract class FileValidatorTest extends TestCase
+abstract class FileValidatorTestCase extends TestCase
 {
 
     /**
@@ -127,7 +127,7 @@ abstract class FileValidatorTest extends TestCase
      * @param array $return
      * @return SchemaStore
      */
-    protected function getSchemaStoreMock($return = array())
+    protected function getSchemaStoreMock($return = [])
     {
         $store = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\SchemaStore')
             ->getMock();

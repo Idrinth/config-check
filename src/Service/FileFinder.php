@@ -15,9 +15,9 @@ class FileFinder
      * @param string[] $blacklist
      * @return string[]
      */
-    public function find($root, $extension, $blacklist = array())
+    public function find(string $root, string $extension, array $blacklist = []): array
     {
-        $result = array();
+        $result = [];
         $files = new RegexIterator(
             new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($root)
@@ -38,9 +38,9 @@ class FileFinder
      * @param string $path
      * @param string $root
      * @param string[] $blacklist
-     * @return true
+     * @return boolean
      */
-    private function isBlacklisted($path, $root, $blacklist)
+    private function isBlacklisted(string $path, string $root, array $blacklist): bool
     {
         foreach ($blacklist as $forbidden) {
             $sysAdjusted = str_replace('/', DIRECTORY_SEPARATOR, $forbidden);

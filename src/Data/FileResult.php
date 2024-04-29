@@ -7,37 +7,20 @@ use De\Idrinth\ConfigCheck\Message;
 class FileResult
 {
     /**
-     * @var string
-     */
-    private $path;
-
-    /**
      * @var Message[]
      */
-    private $messages = array();
+    private array $messages = [];
 
-    /**
-     * @param type $path
-     */
-    public function __construct($path)
+    public function __construct(private string $path)
     {
-        $this->path = $path;
     }
 
-    /**
-     * @param Message $message
-     */
-    public function addMessage(Message $message)
+    public function addMessage(Message $message): void
     {
         $this->messages[] = $message;
     }
 
-    /**
-     * @param int $verbose
-     * @param boolean $warningsAsErrors
-     * @return string
-     */
-    public function getMessage($verbose = 0, $warningsAsErrors = false)
+    public function getMessage(int $verbose = 0, bool $warningsAsErrors = false): string
     {
         if ($verbose < 1) {
             return '';
@@ -56,19 +39,12 @@ class FileResult
         return $content;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMessage(1);
     }
 
-    /**
-     * @param boolean $warningsAsErrors
-     * @return int
-     */
-    public function getErrorNum($warningsAsErrors = false)
+    public function getErrorNum(bool $warningsAsErrors = false): int
     {
         $amount = 0;
         foreach ($this->messages as $message) {

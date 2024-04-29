@@ -6,7 +6,7 @@ use De\Idrinth\ConfigCheck\Data\SchemaStore\BaseSchemaStore;
 use De\Idrinth\ConfigCheck\Service\FileRetriever;
 use PHPUnit\Framework\TestCase;
 
-abstract class BaseSchemaStoreTest extends TestCase
+abstract class BaseSchemaStoreTestCase extends TestCase
 {
     /**
      * @return BaseSchemaStore

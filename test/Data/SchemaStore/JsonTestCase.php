@@ -4,7 +4,7 @@ namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 use De\Idrinth\ConfigCheck\Data\SchemaStore\Json;
 
-class JsonTest extends BaseSchemaStoreTest
+class JsonTestCase extends BaseSchemaStoreTestCase
 {
     /**
      * @test

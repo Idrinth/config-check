@@ -10,28 +10,14 @@ use JsonSchema\Validator;
 
 class JsonFileValidator extends FileValidator
 {
-    /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * @param SchemaStore $schemaStore
-     * @param Validator $validator
-     */
-    public function __construct(SchemaStore $schemaStore, Validator $validator)
+    public function __construct(SchemaStore $schemaStore, private Validator $validator)
     {
         parent::__construct($schemaStore);
-        $this->validator = $validator;
     }
 
-    /**
-     * @param string $content
-     * @return boolean
-     */
-    protected function validateContent($content): bool
+    protected function validateContent(string $content): bool
     {
-        $json = json_decode($content);
+        json_decode($content);
         if (json_last_error() !== JSON_ERROR_NONE) {
             $this->error("File is not parseable: " . json_last_error_msg());
             return false;
@@ -39,12 +25,7 @@ class JsonFileValidator extends FileValidator
         return true;
     }
 
-    /**
-     * @param string $filename
-     * @param string $content
-     * @return void
-     */
-    protected function validateSchema($filename, $content): void
+    protected function validateSchema(string $filename, string $content): void
     {
         $json = json_decode($content);
         $hasSchema = is_object($json) && property_exists($json, '$schema');
@@ -58,12 +39,7 @@ class JsonFileValidator extends FileValidator
         $this->validateAll($json, $schemata);
     }
 
-    /**
-     * @param mixed $json
-     * @param array $schemata
-     * @return void
-     */
-    private function validateAll($json, array $schemata): void
+    private function validateAll(mixed $json, array $schemata): void
     {
         foreach ($schemata as $schema) {
             $this->validator->reset();

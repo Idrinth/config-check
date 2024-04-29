@@ -2,9 +2,9 @@
 
 namespace De\Idrinth\ConfigCheck\Message;
 
-use De\Idrinth\ConfigCheck\Message\WarningMessage;
+use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 
-class WarningMessageTest extends AbstractMessageTest
+class ErrorMessageTestCase extends AbstractMessageTestCase
 {
 
     /**
@@ -12,17 +12,17 @@ class WarningMessageTest extends AbstractMessageTest
      */
     public function testIsFailure()
     {
-        $this->assertFalse($this->getInstance()->isFailure());
+        $this->assertTrue($this->getInstance()->isFailure());
         $this->assertTrue($this->getInstance()->isFailure(true));
-        $this->assertFalse($this->getInstance()->isFailure(false));
+        $this->assertTrue($this->getInstance()->isFailure(false));
     }
 
     /**
-     * @return WarningMessage
+     * @return ErrorMessage
      */
     protected function getInstance()
     {
-        return new WarningMessage("Example");
+        return new ErrorMessage("Example");
     }
 
     /**
@@ -30,6 +30,6 @@ class WarningMessageTest extends AbstractMessageTest
      */
     protected function getMinVerbosity()
     {
-        return 2;
+        return 1;
     }
 }

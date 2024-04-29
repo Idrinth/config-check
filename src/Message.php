@@ -4,21 +4,7 @@ namespace De\Idrinth\ConfigCheck;
 
 interface Message
 {
-
-    /**
-     * @param int $verbose
-     * @return string
-     */
-    public function toString($verbose = 0);
-
-    /**
-     * @return string
-     */
-    public function __toString();
-
-    /**
-     * @param boolean $warningAsError
-     * @return boolean
-     */
-    public function isFailure($warningAsError = false);
+    public function toString(int $verbose = 0);
+    public function __toString(): string;
+    public function isFailure(bool $warningAsError = false): bool;
 }

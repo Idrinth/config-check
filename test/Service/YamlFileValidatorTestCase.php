@@ -2,10 +2,9 @@
 
 namespace De\Idrinth\ConfigCheck\Service;
 
-use De\Idrinth\ConfigCheck\Service\YamlFileValidator;
 use JsonSchema\Validator;
 
-class YamlFileValidatorTest extends FileValidatorTest
+class YamlFileValidatorTestCase extends FileValidatorTestCase
 {
 
     /**

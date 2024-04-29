@@ -5,7 +5,7 @@ namespace De\Idrinth\ConfigCheck\Message;
 use De\Idrinth\ConfigCheck\Message\AbstractMessage;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractMessageTest extends TestCase
+abstract class AbstractMessageTestCase extends TestCase
 {
 
     /**

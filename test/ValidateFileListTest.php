@@ -18,7 +18,7 @@ class ValidateFileListTest extends TestCase
             ->getMock();
         $store->expects($this->any())
             ->method('get')
-            ->willReturn(array());
+            ->willReturn([]);
         return $store;
     }
 
@@ -33,7 +33,7 @@ class ValidateFileListTest extends TestCase
             ->getMock();
         $validator->expects($isCalled ? $this->once() : $this->never())
             ->method('check')
-            ->willReturn(array());
+            ->willReturn([]);
         return $validator;
     }
 

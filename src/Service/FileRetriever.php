@@ -4,29 +4,16 @@ namespace De\Idrinth\ConfigCheck\Service;
 
 class FileRetriever
 {
-    /**
-     * @var string
-     */
-    private $root;
-
-    /**
-     * @param string $root
-     */
-    public function __construct($root)
+    public function __construct(private string $root)
     {
-        $this->root = $root;
     }
 
-    /**
-     * @param string $uri
-     * @return string
-     */
-    public function get($uri)
+    public function get(string $uri): string
     {
-        if (strpos($uri, 'cwd://') === 0) {
+        if (str_starts_with($uri, 'cwd://')) {
             return file_get_contents(str_replace('cwd://', $this->root . DIRECTORY_SEPARATOR, $uri));
         }
-        if (!preg_match('/^.+?:\\/\\//', $uri)) {
+        if (! preg_match('/^.+?:\\/\\//', $uri)) {
             return $this->getFromFilesystem($uri);
         }
         return extension_loaded('curl') ? $this->getCurled($uri) : file_get_contents($uri);
@@ -55,8 +42,6 @@ class FileRetriever
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $uri);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($curl);
         curl_close($curl);
         return $result;

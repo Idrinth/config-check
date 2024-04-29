@@ -4,10 +4,5 @@ namespace De\Idrinth\ConfigCheck\Data;
 
 interface SchemaStore
 {
-    /**
-     * @param string $filename
-     * @param string $uri
-     * @return array matching schemata
-     */
-    public function get($filename, $uri = null);
+    public function get(string $filename, ?string $uri = null): array;
 }

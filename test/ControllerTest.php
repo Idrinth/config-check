@@ -70,20 +70,20 @@ class ControllerTest extends TestCase
     private function getConfig($enabled)
     {
         $config = $this->getMockBuilder('De\Idrinth\ConfigCheck\Data\Config')
-            ->setConstructorArgs(array(__DIR__, $enabled ? array('w' => true) : array()))
+            ->setConstructorArgs(array(__DIR__, $enabled ? array('w' => true) : []))
             ->getMock();
         $config->expects($this->any())
             ->method('isEnabled')
             ->willReturn($enabled);
         $config->expects($this->any())
             ->method('getBlacklist')
-            ->willReturn(array());
+            ->willReturn([]);
         $config->expects($this->any())
             ->method('getRootDir')
             ->willReturn(__DIR__);
         $config->expects($this->any())
             ->method('getMapping')
-            ->willReturn(array());
+            ->willReturn([]);
         $config->expects($this->any())
             ->method('getExtensions')
             ->willReturnCallback(function ($extension) {

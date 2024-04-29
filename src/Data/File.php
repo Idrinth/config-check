@@ -7,40 +7,24 @@ use SplFileInfo;
 
 class File
 {
-    /**
-     * @var SplFileInfo
-     */
-    private $file;
+    private SplFileInfo $file;
 
-    /**
-     * @param string $path
-     */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->file = new SplFileInfo($path);
     }
 
-    /**
-     * @return boolean
-     */
-    public function isFile()
+    public function isFile(): bool
     {
         return $this->file->isFile();
     }
 
-    /**
-     * @return boolean
-     */
-    public function isReadable()
+    public function isReadable(): bool
     {
         return $this->file->isReadable();
     }
 
-    /**
-     * Prevents exceptions that are not useful here
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): int
     {
         try {
             return $this->file->getSize();
@@ -49,11 +33,7 @@ class File
         }
     }
 
-    /**
-     * Prevents exceptions that are not useful here and returns the complete avaible content
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         try {
             return file_get_contents($this->file->getPathname()) ?: '';
@@ -62,10 +42,7 @@ class File
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->file->getFilename();
     }

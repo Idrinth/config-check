@@ -7,12 +7,9 @@ class ValidationList
     /**
      * @var FileResult[]
      */
-    private $list = array();
+    private array $list = [];
 
-    /**
-     * @param FileResult $file
-     */
-    public function addFile(FileResult $file)
+    public function addFile(FileResult $file): void
     {
         $this->list[] = $file;
     }
@@ -20,9 +17,9 @@ class ValidationList
     /**
      * @param int $verbose
      * @param boolean $warningAsError
-     * @return [int,string]
+     * @return array [int,string]
      */
-    public function finish($verbose = 0, $warningAsError = false)
+    public function finish(int $verbose = 0, bool $warningAsError = false): array
     {
         $code = 0;
         $message = '';

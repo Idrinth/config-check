@@ -10,20 +10,13 @@ use De\Idrinth\ConfigCheck\Service\FileValidator;
 
 class ValidateFileList
 {
-    /**
-     * @var FileFinder
-     */
-    private $finder;
-
-    /**
-     * @var string
-     */
-    private $baseDir;
+    private FileFinder $finder;
+    private string $baseDir;
 
     /**
      * @var FileValidator[]
      */
-    private $validators;
+    private array $validators;
 
     /**
      * @param FileFinder $finder
@@ -32,8 +25,8 @@ class ValidateFileList
      */
     public function __construct(
         FileFinder $finder,
-        $baseDir,
-        $validators = array()
+        string $baseDir,
+        array $validators = []
     ) {
         $this->finder = $finder;
         $this->baseDir = $baseDir;
@@ -42,15 +35,16 @@ class ValidateFileList
 
     /**
      * @param string $extension
-     * @param ValidationList $data
+     * @param string $type
+     * @param ValidationList &$data
      * @param string[] $blacklist
      * @return ValidationList
      */
     public function process(
-        $extension,
-        $type,
+        string $extension,
+        string $type,
         ValidationList &$data,
-        $blacklist = array()
+        array $blacklist = []
     ) {
         if (!isset($this->validators[$type])) {
             return $data;

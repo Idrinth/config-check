@@ -4,11 +4,7 @@ namespace De\Idrinth\ConfigCheck\Data\SchemaStore;
 
 class Json extends BaseSchemaStore
 {
-    /**
-     * @param string $schema
-     * @return object
-     */
-    protected function prepareSchema($schema)
+    protected function prepareSchema(string $schema): object
     {
         return json_decode($schema);
     }

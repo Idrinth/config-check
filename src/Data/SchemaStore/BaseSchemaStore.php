@@ -8,39 +8,21 @@ use De\Idrinth\ConfigCheck\Service\FileRetriever;
 abstract class BaseSchemaStore implements SchemaStore
 {
     /**
-     * uri => data
-     * @var array
+     * @var array<string, string> [uri => data]
      */
-    private $schemata = array();
-
-    /**
-     * @var string[]
-     */
-    private $filemappings;
-
-    /**
-     * @var FileRetriever
-     */
-    private $retriever;
+    private array $schemata = [];
 
     /**
      * @param FileRetriever $retriever
-     * @param string[] $filemappings
+     * @param array<string, string> $filemappings
      */
-    public function __construct(FileRetriever $retriever, $filemappings = array())
+    public function __construct(private FileRetriever $retriever, private $filemappings = [])
     {
-        $this->filemappings = $filemappings;
-        $this->retriever = $retriever;
     }
 
-    /**
-     * @param string $filename
-     * @param string $uri
-     * @return array
-     */
-    public function get($filename, $uri = null)
+    public function get(string $filename, ?string $uri = null): array
     {
-        $list = array();
+        $list = [];
         if (isset($this->filemappings[$filename])) {
             $this->fill($list, $this->filemappings[$filename]);
         }
@@ -50,10 +32,7 @@ abstract class BaseSchemaStore implements SchemaStore
         return array_values($list);
     }
 
-    /**
-     * @param string $uri
-     */
-    protected function fill(&$list, $uri)
+    protected function fill(array &$list, string $uri): void
     {
         if (isset($list[$uri])) {
             return;
@@ -64,8 +43,5 @@ abstract class BaseSchemaStore implements SchemaStore
         $list[$uri] = $this->schemata[$uri];
     }
 
-    /**
-     * @param string the schema string
-     */
-    abstract protected function prepareSchema($schema);
+    abstract protected function prepareSchema(string $schema): mixed;
 }

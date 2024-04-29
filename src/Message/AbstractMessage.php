@@ -6,39 +6,17 @@ use De\Idrinth\ConfigCheck\Message;
 
 abstract class AbstractMessage implements Message
 {
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var int
-     */
-    private $minVerbosity;
-
-    /**
-     * @param string $message
-     * @param int $minVerbosity
-     */
-    public function __construct($message, $minVerbosity)
+    public function __construct(private string $message, private int $minVerbosity)
     {
-        $this->message = trim($message, "\n ");
-        $this->minVerbosity = $minVerbosity;
+        $this->message = trim($this->message, "\n ");
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString(1);
     }
 
-    /**
-     * @param int $verbose
-     * @return string
-     */
-    public function toString($verbose = 0)
+    public function toString(int $verbose = 0): string
     {
         if ($verbose < $this->minVerbosity) {
             return "";
@@ -49,8 +27,5 @@ abstract class AbstractMessage implements Message
         return "  [{$this->getSymbol()}] $this->message\n";
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getSymbol();
+    abstract protected function getSymbol(): string;
 }

@@ -5,7 +5,7 @@ namespace De\Idrinth\ConfigCheck\Service;
 use De\Idrinth\ConfigCheck\Message\ErrorMessage;
 use De\Idrinth\ConfigCheck\Service\XmlFileValidator;
 
-class XmlFileValidatorTest extends FileValidatorTest
+class XmlFileValidatorTestCase extends FileValidatorTestCase
 {
 
     /**

@@ -7,7 +7,7 @@ class RetrievalFakes
     private static $fakeExtensionLoaded = null;
     private static $fakeFileGetContents = null;
     private static $fakeCurlExec = null;
-    private static $wasCalled = array();
+    private static $wasCalled = [];
 
     /**
      * @param string|boolean $filedata
@@ -51,7 +51,7 @@ class RetrievalFakes
     public function getCalled()
     {
         $values = self::$wasCalled;
-        self::$wasCalled = array();
+        self::$wasCalled = [];
         return $values;
     }
     /**
@@ -62,7 +62,7 @@ class RetrievalFakes
         self::$fakeCurlExec = null;
         self::$fakeFileGetContents = null;
         self::$fakeExtensionLoaded = null;
-        self::$wasCalled = array();
+        self::$wasCalled = [];
     }
 
     /**
@@ -82,7 +82,7 @@ class RetrievalFakes
     {
         self::$wasCalled[$function] = isset(self::$wasCalled[$function]) ?
             self::$wasCalled[$function] :
-            array();
+            [];
         self::$wasCalled[$function][$param] = isset(self::$wasCalled[$function][$param]) ?
             self::$wasCalled[$function][$param] + 1 :
             1;

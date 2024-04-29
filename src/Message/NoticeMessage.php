@@ -4,27 +4,17 @@ namespace De\Idrinth\ConfigCheck\Message;
 
 class NoticeMessage extends AbstractMessage
 {
-    /**
-     * @param string $message
-     */
-    public function __construct($message)
+    public function __construct(string $message)
     {
         parent::__construct($message, 3);
     }
 
-    /**
-     * @param boolean $warningAsError
-     * @return boolean
-     */
-    public function isFailure($warningAsError = false)
+    public function isFailure(bool $warningAsError = false): bool
     {
         return false;
     }
 
-    /**
-     * @return string
-     */
-    protected function getSymbol()
+    protected function getSymbol(): string
     {
         return "i";
     }
