@@ -15,7 +15,7 @@
     "require": {
         "php": "^8",
         "idrinth/yaml-facade": "dev-master",
-        "justinrainbow/json-schema": "^5.2.8",
+        "justinrainbow/json-schema": "^6.0.0",
         "ext-libxml": "*",
         "ext-simplexml": "*",
         "ext-dom": "*",
